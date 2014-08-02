@@ -115,4 +115,7 @@ micro: all
 cub: OPT_DEFS += -DKEYMAP_CUB
 cub: all
 
+grota: OPT_DEFS += -DKEYMAP_GROTA
+grota: all
+
 
