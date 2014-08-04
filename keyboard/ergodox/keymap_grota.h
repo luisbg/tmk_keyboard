@@ -29,7 +29,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
      * | Tab    |   Q  |   F  |   W  |   R  |   Y  | Home |           | End  |  '"  |   H  |   J  |   K  |   L  |  RGui  |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |        |   A  |   S  |   D  | G/L1 |   T  |------|           |------|   P  |   C  |   E  |   O  |   I  | RShift |
+     * |        |   A  |   S  |D/Ctrl| G/L1 |   T  |------|           |------|   P  |   C  |   E  |   O  |   I  | RShift |
      * |--------+------+------+------+------+------|      |           |  ;:  |------+------+------+------+------+--------|
      * | LShift |   Z  |   X  |   M  |   B  |V/Shft|      |           |      |   U  |   N  |  ,<  |  Up  |  .>  | RCtrl  |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -67,7 +67,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KEYMAP(  // Layer0, Left hand.
         GRV,      1,     2,      3,      4,     5,     6,
         TAB,      Q,     F,      W,      R,     Y,  HOME,
-        NO,       A,     S,      D,    FN3,     T,
+        NO,       A,     S,    FN5,    FN3,     T,
         LSHIFT,   Z,     X,      M,      B,   FN4,  NO,
         LCTRL, LGUI,  FN2, LCTRL,  LALT,
                                       LBRC, RBRC,
@@ -124,6 +124,7 @@ static const uint16_t PROGMEM fn_actions[] = {
     [3] = ACTION_LAYER_TAP_KEY(1, KC_G),                  // FN3 - Momentary Layer1 on G key
 
     [4] = ACTION_MODS_TAP_KEY(MOD_LSFT, KC_V),            // FN4 - Tap=V, Hold=Left-Shift
+    [5] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_D),            // FN5 - Tap=D, Hold=Left-CTRL
 
     //[8] = ACTION_FUNCTION_TAP(L_CTRL_ALT_ENT),          // FN21 - momentary Layer5+CTRL+ALT on Enter, to use with F* keys on top row
 };

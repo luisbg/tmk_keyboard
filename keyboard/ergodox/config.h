@@ -36,10 +36,10 @@ Project located at <https://github.com/benblazak/ergodox-firmware>
 #define MATRIX_ROWS 14
 #define MATRIX_COLS 6
 
-#define MOUSEKEY_DELAY          100
+#define MOUSEKEY_DELAY          3
 #define MOUSEKEY_INTERVAL       20
-#define MOUSEKEY_MAX_SPEED      3
-#define MOUSEKEY_TIME_TO_MAX    10
+#define MOUSEKEY_MAX_SPEED      4
+#define MOUSEKEY_TIME_TO_MAX    17
 
 /* define if matrix has ghost */
 //#define MATRIX_HAS_GHOST
