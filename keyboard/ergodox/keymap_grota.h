@@ -24,22 +24,22 @@
  */
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Layer 0:
-     * ,----------------------------------------------------.           ,-----------------------------------------------------.
-     * |  `~    |   1  |   2  |   3  |    4   |   5  |   6  |           |   7  |   8  |    9   |   0  |   -_  |  =+  |   \|   |
-     * |--------+------+------+------+--------+-------------|           |------+------+--------+------+-------+------+--------|
-     * | Tab    |   Q  |   F  |   W  |    R   |   Y  | Home |           | End  |  '"  |    H   |   J  |   K   |   L  |  RGui  |
-     * |--------+------+------+------+--------+------|      |           |      |------+--------+------+-------+------+--------|
-     * | Tab    |   A  |   S  |   D  |    G   |   T  |------|           |------|  ,<  |    C   |   E  |   I   |   O  |  RCtrl |
-     * |--------+------+------+------+--------+------|      |           |  ;:  |------+--------+------+-------+------+--------|
-     * | LShift |   Z  |   X  |   M  |  B/L1  |   V  |      |           |      |  .>  |  N/L1  |   P  |   Up  |   U  | RShift |
+     * ,----------------------------------------------------.           ,------------------------------------------------------.
+     * |  `~    |   1  |   2  |   3  |    4   |   5  |   6  |           |   7  |   8   |    9   |   0  |   -_  |  =+  |   \|   |
+     * |--------+------+------+------+--------+-------------|           |------+-------+--------+------+-------+------+--------|
+     * | Tab    |   Q  |   F  |   W  |    R   |   Y  | Home |           | End  |  '"   |    H   |   J  |   K   |   L  |  RGui  |
+     * |--------+------+------+------+--------+------|      |           |      |-------+--------+------+-------+------+--------|
+     * | Tab    |   A  |   S  |   D  |    G   |   T  |------|           |------|  ,<   |    C   |   E  |   I   |   O  |  RCtrl |
+     * |--------+------+------+------+--------+------|      |           |  ;:  |-------+--------+------+-------+------+--------|
+     * | LShift |   Z  |   X  |   M  |  B/L1  |   V  |      |           |      |.>/RAlt|  N/L1  |   P  |   Up  |   U  | RShift |
      * `--------+------+------+------+--------+-------------'           `-------------+--------+------+-------+------+--------'
-     *   |LCtrl | LGui | ~L1  | LCtrl|PgU/LAlt|                                       |PgD RAlt| Left |  Down | Right|  Esc  |
+     *   |LCtrl | LGui | ~L1  | LCtrl|PgU/LAlt|                                       |PgD LAlt| Left |  Down | Right|  Esc  |
      *   `------------------------------------'                                       `--------------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |  [{  |  ]}  |       | +L1  | Del  |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      |      |       |      |      |      |
-     *                                 |Space | BkSp |------|       |------| Space| Enter|
+     *                                 |Space | BkSp |------|       |------| Enter| Space|
      *                                 |LCtrl |      |  Esc |       |  /   |      | RCtrl|
      *                                 `--------------------'       `--------------------'
      *
@@ -79,12 +79,12 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                7,    8,    9,      0,  MINS,   EQL,    BSLS,
              END, QUOT,    H,      J,     K,     L,    RGUI,
                  COMMA,    C,      E,     I,     O,   RCTRL,
-          SCOLON,  DOT,  FN9,      P,    UP,     U,  RSHIFT,
+          SCOLON,  FN7,  FN9,      P,    UP,     U,  RSHIFT,
                         FN10,   LEFT,  DOWN,  RGHT,     ESC,
 
         FN12, DEL,
         NO,
-        SLSH, SPC, FN4
+        SLSH, ENT, FN4
     ),
 
     KEYMAP(  // Layer1, left hand
@@ -122,14 +122,14 @@ enum function_id {
 static const uint16_t PROGMEM fn_actions[] = {
     [2] =  ACTION_LAYER_MOMENTARY(1),                     // FN2 -  Momentary L1
     [3] =  ACTION_LAYER_TAP_KEY(1, KC_B),                 // FN3 -  Tap=B, Hold=L1
-    [4] =  ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),           // FN4 -  Tap=ENT, Hold=Left-CTRL
-    [5] =  ACTION_MODS_TAP_KEY(MOD_LCTL, KC_SPC),           // FN5 -  Tap=G, Hold=Left-SHIFT
+    [4] =  ACTION_MODS_TAP_KEY(MOD_RCTL, KC_SPC),         // FN4 -  Tap=SPC, Hold=Left-CTRL
+    [5] =  ACTION_MODS_TAP_KEY(MOD_LCTL, KC_SPC),         // FN5 -  Tap=G, Hold=Left-SHIFT
     [6] =  ACTION_MODS_TAP_KEY(MOD_LALT, KC_PGUP),        // FN6 -  Tap=PGUP, Hold=Left-ALT
 
-    //[7] =  ACTION_MODS_TAP_KEY(MOD_RSFT, KC_C),           // FN7 -  Tap=C, Hold=Right-SHIFT
+    [7] =  ACTION_MODS_TAP_KEY(MOD_RALT, KC_DOT),         // FN7 -  Tap=., Hold=Right-Alt
     //[8] =  ACTION_MODS_TAP_KEY(MOD_RCTL, KC_E),           // FN8 -  Tap=E, Hold=Right-CTRL
     [9] =  ACTION_LAYER_TAP_KEY(1, KC_N),                 // FN9 -  Tap=N, Hold=L1
-    [10] = ACTION_MODS_TAP_KEY(MOD_RALT, KC_PGDN),        // FN10 - Tap=PGDOWN, Hold=Right-ALT
+    [10] = ACTION_MODS_TAP_KEY(MOD_LALT, KC_PGDN),        // FN10 - Tap=PGDOWN, Hold=Left-ALT
     //[11] = ACTION_MODS_TAP_KEY(MOD_RGUI, KC_I),           // FN11 - Tap=I, Hold=Right-GUI
     [12] = ACTION_LAYER_SET(1, ON_BOTH),                  // FN12 -  Set L1
 };
