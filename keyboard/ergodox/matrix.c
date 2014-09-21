@@ -166,6 +166,27 @@ uint8_t matrix_scan(void)
     mcp23018_status = ergodox_left_leds_update();
 #endif
 
+#ifdef KEYMAP_GROTA
+    uint8_t layer = biton32(layer_state);
+
+    /*ergodox_right_led_1_off();*/
+    /*ergodox_right_led_2_off();*/
+    /*ergodox_right_led_3_off();*/
+    switch (layer) {
+        case 0:
+            ergodox_board_led_off();
+            break;
+        case 1:
+            ergodox_board_led_on();
+            break;
+        default:
+            // none
+            break;
+    }
+
+    mcp23018_status = ergodox_left_leds_update();
+#endif
+
     for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
         select_row(i);
         matrix_row_t cols = read_cols(i);
