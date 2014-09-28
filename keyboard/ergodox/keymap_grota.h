@@ -31,17 +31,17 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
      * |  Tab   |   A  |  S  |  D  |  G   |  X  |------|           |------|  ,<   |   C   |   E  |  I   |   O  |  PgDwn |
      * |--------+------+-----+-----+------+-----|  Esc |           |S-Ins |-------+-------+------+------+------+--------|
-     * | LShift |   Z  |  T  |  M  | B/L1 |  V  |      |           |      |  /?   | N/L1  |   P  |  L   |   U  | RShift |
+     * | LShift |   Z  |  T  |  M  | B/L1 |  V  |      |           |      |/? RAlt| N/L1  |   P  |  L   |   U  | RShift |
      * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
-     *  | LCtrl | LAlt | C-v | C-c | Bksp |                                       | Space | Left | Down |  Up  | Right |
-     *  `---------------------------------'                                       | RCtrl |      |      |      |       |
-     *                                                                            `------------------------------------'
+     *  | LCtrl |  C-x | C-v | C-c | Bksp |                                       | Space | Left | Down |  Up  | Right |
+     *  |       |      |     | LAlt|      |                                       | RCtrl |      |      |      |       |
+     *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |  [{  |  ]}  |       |  L1  | Del  |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      |  F2  |       |  F3  |      |      |
      *                                 |Space |  .>  |------|       |------|  '"  | Enter|
-     *                                 | LAlt |      | LGui |       |  F1  | RAlt |      |
+     *                                 | LAlt |      | LGui |       |  F1  |      |      |
      *                                 `--------------------'       `--------------------'
      *
      * Layer 1:
@@ -70,7 +70,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TAB,      Q,     F,      W,      R,     Y,  HOME,
         TAB,      A,     S,      D,      G,     X,
         LSHIFT,   Z,     T,      M,    FN3,     V,   ESC,
-        LCTRL, LALT,   FN8,    FN4,   BSPC,
+        LCTRL, FN11,   FN4,    FN8,   BSPC,
 
                                       LBRC, RBRC,
                                               F2,
@@ -80,12 +80,12 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                7,      8,    9,      0,  MINS,   EQL,    BSLS,
              END, SCOLON,    H,      J,     K,     L,    PGUP,
                    COMMA,    C,      E,     I,     O,    PGDN,
-            FN10,   SLSH,  FN9,      P,     L,     U,  RSHIFT,
+            FN10,   FN7,  FN9,      P,     L,     U,  RSHIFT,
                            FN6,   LEFT,  DOWN,    UP,    RGHT,
 
-        FN12, DEL,
+        FN12,  DEL,
           F3,
-          F1, FN7, ENT
+          F1, QUOTE, ENT
     ),
 
     KEYMAP(  // Layer1, left hand
@@ -113,12 +113,11 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 enum function_id {
     TEENSY_KEY,
     CUSTOM_KEY,
-    L_CTRL_ALT_ENT,
-    R_CTRL_ALT_ENT,
+    CTRLC_AND_LALT,
 };
 
 enum macro_id {
-  CTRLC,
+  CTRLX,
   CTRLV,
   SHIFTINS,
 };
@@ -129,16 +128,15 @@ enum macro_id {
 static const uint16_t PROGMEM fn_actions[] = {
     [2] =  ACTION_LAYER_MOMENTARY(1),                     // FN2 -  Momentary L1
     [3] =  ACTION_LAYER_TAP_KEY(1, KC_B),                 // FN3 -  Tap=B, Hold=L1
-    [4] =  ACTION_MACRO(CTRLC),                           // FN4 -  C-c
-    [5] =  ACTION_MODS_TAP_KEY(MOD_LALT, KC_SPC),         // FN5 -  Tap=space, Hold=Left-Alt
+    [4] =  ACTION_MACRO(CTRLV),                           // FN4 -  C-v
+    [5] =  ACTION_MODS_TAP_KEY(MOD_LALT, KC_SPC),        // FN5 -  Tap=space, Hold=Left-Alt
     [6] =  ACTION_MODS_TAP_KEY(MOD_RCTL, KC_SPC),         // FN6 -  Tap=Slash, Hold=RCtrl
 
-    [7] =  ACTION_MODS_TAP_KEY(MOD_RALT, KC_QUOTE),        // FN7 -  Tap=', Hold=Right-Alt
-    [8] =  ACTION_MACRO(CTRLV),                           // FN8 -  C-v
+    [7] =  ACTION_MODS_TAP_KEY(MOD_RALT, KC_SLSH),        // FN7 -  Tap=/, Hold=Right-Alt
+    [8] =  ACTION_FUNCTION_TAP(CTRLC_AND_LALT),           // FN8 -  Tap=C-c, Hold=LAlt
     [9] =  ACTION_LAYER_TAP_KEY(1, KC_N),                 // FN9 -  Tap=N, Hold=L1
     [10] =  ACTION_MACRO(SHIFTINS),                       // FN10 -  Shift-Ins
-    //[10] = ACTION_MODS_TAP_KEY(MOD_LALT, KC_PGDN),        // FN10 - Tap=PGDOWN, Hold=Left-ALT
-    //[11] = ACTION_MODS_TAP_KEY(MOD_RGUI, KC_I),           // FN11 - Tap=I, Hold=Right-GUI
+    [11] =  ACTION_MACRO(CTRLX),                          // FN11 -  C-x
     [12] = ACTION_LAYER_SET(1, ON_BOTH),                  // FN12 -  Set L1
 };
 
@@ -161,56 +159,56 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
         print("not supported.\n");
     }
 
-    if (id == L_CTRL_ALT_ENT || id == R_CTRL_ALT_ENT) {
-        if (record->tap.count == 0 || record->tap.interrupted) {
-            uint8_t weak_mods;
-            uint8_t layer;
-
-            if (id == L_CTRL_ALT_ENT) {
-                weak_mods = MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT);
-                layer     = 5;
-            } else {
-                weak_mods = MOD_BIT(KC_RCTL) | MOD_BIT(KC_RALT);
-                layer     = 6;
-            }
-
-            if (record->event.pressed) {
-                layer_on(layer);
-                add_weak_mods(weak_mods);
-            } else {
-                del_weak_mods(weak_mods);
-                layer_off(layer);
-            }
+    if (id == CTRLC_AND_LALT) {
+      if (record->event.pressed) {
+        if (record->tap.count > 0 && !record->tap.interrupted) {
+          if (record->tap.interrupted) {
+            register_mods(MOD_BIT(KC_LALT));
+          }
         } else {
-            if (record->event.pressed) {
-                add_key(KC_ENT);
-                send_keyboard_report();
-            } else {
-                del_key(KC_ENT);
-                send_keyboard_report();
-            }
+          register_mods(MOD_BIT(KC_LALT));
         }
+      } else {
+        if (record->tap.count > 0 && !(record->tap.interrupted)) {
+          add_weak_mods(MOD_BIT(KC_LCTL));
+          send_keyboard_report();
+          register_code(KC_C);
+          unregister_code(KC_C);
+          del_weak_mods(MOD_BIT(KC_LCTL));
+          send_keyboard_report();
+          record->tap.count = 0;  // ad hoc: cancel tap
+        } else {
+          unregister_mods(MOD_BIT(KC_LALT));
+        }
+      }
     }
 }
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
-    if (record->event.pressed) {
-        switch (id) {
-          case CTRLC:
-            return (record->event.pressed ?
-                MACRO( D(LCTL), D(C), U(C), U(LCTL), END ) :
-                MACRO_NONE );
-          case CTRLV:
-            return (record->event.pressed ?
-                MACRO( D(LCTL), D(V), U(V), U(LCTL), END ) :
-                MACRO_NONE );
-          case SHIFTINS:
-            return (record->event.pressed ?
-                MACRO( D(LSHIFT), D(INSERT), U(INSERT), U(LSHIFT), END ) :
-                MACRO_NONE );
-        }
-    }
-    return MACRO_NONE;
+  switch (id) {
+    case CTRLX:
+      if(!record->event.pressed) {
+        unregister_mods(MOD_BIT(KC_LCTL));
+      }
+      return (record->event.pressed ?
+          MACRO( I(15), D(LCTL), T(X), U(LCTL), END ) :
+          MACRO_NONE);
+    case CTRLV:
+      if(!record->event.pressed) {
+        unregister_mods(MOD_BIT(KC_LCTL));
+      }
+      return (record->event.pressed ?
+          MACRO( I(15), D(LCTL), T(V), U(LCTL), END ) :
+          MACRO_NONE);
+    case SHIFTINS:
+      if(!record->event.pressed) {
+        unregister_mods(MOD_BIT(KC_LSHIFT));
+      }
+      return (record->event.pressed ?
+          MACRO( I(15), D(LSHIFT), T(INSERT), U(LSHIFT), END ) :
+          MACRO_NONE);
+  }
+  return MACRO_NONE;
 }
 
 #define FN_ACTIONS_SIZE     (sizeof(fn_actions)   / sizeof(fn_actions[0]))

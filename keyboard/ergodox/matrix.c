@@ -169,9 +169,10 @@ uint8_t matrix_scan(void)
 #ifdef KEYMAP_GROTA
     uint8_t layer = biton32(layer_state);
 
-    /*ergodox_right_led_1_off();*/
-    /*ergodox_right_led_2_off();*/
-    /*ergodox_right_led_3_off();*/
+    ergodox_board_led_off();
+    ergodox_right_led_1_off();
+    ergodox_right_led_2_off();
+    ergodox_right_led_3_off();
     switch (layer) {
         case 0:
             ergodox_board_led_off();
