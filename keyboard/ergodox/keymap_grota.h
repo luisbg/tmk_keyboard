@@ -34,14 +34,14 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * | LShift |   Z  |  T  |  M  | B/L1 |  V  |      |           |      |/? RAlt| N/L1  |   P  |  L   |   U  | RShift |
      * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
      *  | LCtrl |  C-x | C-v | C-c | Bksp |                                       | Space | Left | Down |  Up  | Right |
-     *  |       |      |     | LAlt|      |                                       | RCtrl |      |      |      |       |
+     *  |       |      |     | LAlt|      |                                       |       |      |      |      |       |
      *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |  [{  |  ]}  |       |  L1  | Del  |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      |  F2  |       |  F3  |      |      |
-     *                                 |Space |  .>  |------|       |------|  '"  | Enter|
-     *                                 | LAlt |      | LGui |       |  F1  |      |      |
+     *                                 | .>   |  '"  |------|       |------| LAlt |Enter |
+     *                                 | LAlt |      | LGui |       |  F1  |      |RCtrl |
      *                                 `--------------------'       `--------------------'
      *
      * Layer 1:
@@ -52,10 +52,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |        |      | Left | Down | Right|      |------|           |------|      |  M_L |  M_D |  M_R | BTN1 |        |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |        |      |      |      | TRNS |      |      |           |      |      | TRNS | BTN2 | KP_8 |      |        |
+     * |        |      |      |      | TRNS |      |      |           |      |      | TRNS | BTN2 |      | KP_8 |        |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-     *   |      |      |      |      |      |                                       | KP_0 | KP_4 | KP_2 | KP_6 |       |
-     *   `----------------------------------'                                       `-----------------------------------'
+     *   |      |      |      |      |      |                                       | KP_0 |      | KP_4 | KP_2 | KP_6 |
+     *   `----------------------------------'                                       `----------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |      |Teensy|       |      |      |
      *                                 ,------|------|------|       |------+------+------.
@@ -74,18 +74,18 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                                       LBRC, RBRC,
                                               F2,
-                                 FN5,  DOT, LGUI,
+                                 FN5,QUOTE, LGUI,
 
             // Right hand.
-               7,      8,    9,      0,  MINS,   EQL,    BSLS,
-             END, SCOLON,    H,      J,     K,     L,    PGUP,
-                   COMMA,    C,      E,     I,     O,    PGDN,
-            FN10,   FN7,  FN9,      P,     L,     U,  RSHIFT,
-                           FN6,   LEFT,  DOWN,    UP,    RGHT,
+               7,      8,    9,   0, MINS,   EQL,   BSLS,
+             END, SCOLON,    H,   J,    K,     L,   PGUP,
+                   COMMA,    C,   E,    I,     O,   PGDN,
+            FN10,   FN7,  FN9,    P,    L,     U, RSHIFT,
+                           SPC, LEFT, DOWN,   UP,   RGHT,
 
         FN12,  DEL,
           F3,
-          F1, QUOTE, ENT
+          F1, LALT, FN6
     ),
 
     KEYMAP(  // Layer1, left hand
@@ -101,8 +101,8 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                F7,   F8,   F9,  F10, WH_U, F11,  F12,
              TRNS, TRNS, TRNS, MS_U, WH_D, TRNS, TRNS,
                    TRNS, MS_L, MS_D, MS_R, BTN1, TRNS,
-             TRNS, TRNS, TRNS, BTN2,   P8, TRNS, TRNS,
-                            P0,  P4,   P2,   P6, TRNS,
+             TRNS, TRNS, TRNS, BTN2, TRNS,   P8, TRNS,
+                           P0, TRNS,   P4,   P2,   P6,
         TRNS,TRNS,
         FN0,
         TRNS,TRNS,TRNS
@@ -129,8 +129,8 @@ static const uint16_t PROGMEM fn_actions[] = {
     [2] =  ACTION_LAYER_MOMENTARY(1),                     // FN2 -  Momentary L1
     [3] =  ACTION_LAYER_TAP_KEY(1, KC_B),                 // FN3 -  Tap=B, Hold=L1
     [4] =  ACTION_MACRO(CTRLV),                           // FN4 -  C-v
-    [5] =  ACTION_MODS_TAP_KEY(MOD_LALT, KC_SPC),        // FN5 -  Tap=space, Hold=Left-Alt
-    [6] =  ACTION_MODS_TAP_KEY(MOD_RCTL, KC_SPC),         // FN6 -  Tap=Slash, Hold=RCtrl
+    [5] =  ACTION_MODS_TAP_KEY(MOD_LALT, KC_DOT),        // FN5 -  Tap=space, Hold=Left-Alt
+    [6] =  ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),       // FN6 -  Tap=Enter, Hold=RCtrl
 
     [7] =  ACTION_MODS_TAP_KEY(MOD_RALT, KC_SLSH),        // FN7 -  Tap=/, Hold=Right-Alt
     [8] =  ACTION_FUNCTION_TAP(CTRLC_AND_LALT),           // FN8 -  Tap=C-c, Hold=LAlt
@@ -138,6 +138,7 @@ static const uint16_t PROGMEM fn_actions[] = {
     [10] =  ACTION_MACRO(SHIFTINS),                       // FN10 -  Shift-Ins
     [11] =  ACTION_MACRO(CTRLX),                          // FN11 -  C-x
     [12] = ACTION_LAYER_SET(1, ON_BOTH),                  // FN12 -  Set L1
+    //[13] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),         // FN13  Tap=ENT, Hold=RCtrl
 };
 
 static const uint16_t PROGMEM fn_actions_1[] = {
