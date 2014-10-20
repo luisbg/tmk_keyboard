@@ -41,7 +41,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      | C-x  |       |  F3  |      |      |
      *                                 |  '"  | C-c  |------|       |------| LAlt |Enter |
-     *                                 |      |      | C-v  |       | Del  |      |RCtrl |
+     *                                 | LCtrl|      | C-v  |       | Del  |      |RCtrl |
      *                                 `--------------------'       `--------------------'
      *
      * Layer 1:
@@ -74,7 +74,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                                          F2, LGUI,
                                              FN11,
-                                 QUOTE, FN8,  FN4,
+                                  FN13, FN8,  FN4,
 
             // Right hand.
                7,      8,    9,   0, MINS,   EQL,   BSLS,
@@ -138,7 +138,7 @@ static const uint16_t PROGMEM fn_actions[] = {
     [10] = ACTION_MACRO(SHIFTINS),                      // FN10 -  Shift-Ins
     [11] = ACTION_MACRO(CTRLX),                         // FN11 -  C-x
     [12] = ACTION_LAYER_SET(1, ON_BOTH),                // FN12 -  Set L1
-    //[13] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),       // FN13  Tap=ENT, Hold=RCtrl
+    [13] = ACTION_MODS_TAP_KEY(MOD_LCTL, KC_QUOTE),     // FN13
 };
 
 static const uint16_t PROGMEM fn_actions_1[] = {
