@@ -30,11 +30,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |  Tab   |   Q  |  F  |  W  |  R   |  Y  | Home |           | End  |  ;:   |   H   |   J  |  K   |   L  |  PgUp  |
      * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
      * |  '"    |   A  |  S  |  D  |  G   |  X  |------|           |------|  ,<   |   C   |   E  |  I   |   O  |  PgDwn |
-     * |--------+------+-----+-----+------+-----|  Esc |           |S-Ins |-------+-------+------+------+------+--------|
+     * |--------+------+-----+-----+------+-----|  [{  |           |  ]}  |-------+-------+------+------+------+--------|
      * | LShift |   Z  |  T  |  M  | B/L1 |  V  |      |           |      |/? RAlt| N/L1  |   P  |  .>  |   U  | RShift |
      * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
-     *  | LCtrl |  [{  | ]}  | LAlt| Bksp |                                       | Space | Left | Down |  Up  | Right |
-     *  |       |      |     |     |      |                                       |       |      |      |      |       |
+     *  | LCtrl | Esc  |S-Ins| LAlt| Bksp |                                       | Space | Left | Down |  Up  | Right |
      *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |  F2  | LGui |       |  L1  |  F1  |
@@ -69,8 +68,8 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         GRV,    1,     2,     3,      4,   5,     6,
         TAB,    Q,     F,     W,      R,   Y,  HOME,
       QUOTE,    A,     S,     D,      G,   X,
-     LSHIFT,    Z,     T,     M,    FN3,   V,   ESC,
-      LCTRL, LBRC,  RBRC,  LALT,   BSPC,
+     LSHIFT,    Z,     T,     M,    FN3,   V,  LBRC,
+      LCTRL,  ESC,  FN10,  LALT,   BSPC,
 
                                          F2, LGUI,
                                              FN11,
@@ -80,7 +79,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                7,      8,    9,   0,   P0,   EQL,   BSLS,
              END, SCOLON,    H,   J,    K,     L,   PGUP,
                    COMMA,    C,   E,    I,     O,   PGDN,
-            FN10,   FN7,  FN9,    P,  DOT,     U, RSHIFT,
+            RBRC,   FN7,  FN9,    P,  DOT,     U, RSHIFT,
                            SPC, LEFT, DOWN,   UP,   RGHT,
 
         FN12,   F1,
