@@ -1,4 +1,4 @@
-make -f Makefile.pjrc grota teensy
+make -f Makefile.lufa grota teensy
 sleep 1
 xmodmap ~/.Xmodmap
 xset r rate 200 90

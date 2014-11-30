@@ -36,7 +36,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *  | LCtrl | Esc  |S-Ins| LAlt| Bksp |                                       | Space | Left | Down |  Up  | Right |
      *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
-     *                                        |  F2  | LGui |       |  L1  |  F1  |
+     *                                        |  F2  | LGui |       |  L2  |  F1  |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      | C-x  |       |  F3  |      |      |
      *                                 | C-c  |  -_  |------|       |------| LAlt |Enter |
@@ -106,6 +106,26 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         FN0,
         TRNS,TRNS,TRNS
     ),
+
+    KEYMAP(  // Layer2: steno for plover
+        NO, NO,  NO,  NO,  NO,  NO,  NO,
+        NO,  1,   2,   3,   4,   5,   NO,
+        NO,  Q,   W,   E,   R,   T,
+        NO,  A,   S,   D,   F,   G,   NO,
+        NO,  NO,  NO,  C,   V,
+                                  NO, NO,
+                                      NO,
+                            BSPC, NO, NO,
+
+                NO, NO,  NO,  NO,   NO,   NO,    NO,
+                NO,  6,   7,   8,    9,    0,    NO,
+                     Y,   U,   I,    O,    P,  LBRC,
+                NO,  H,   J,   K,    L, SCLN,  QUOT,
+                          N,   M,   NO,   NO,    NO,
+        NO,  NO,
+       FN0,
+        NO,  NO, NO
+    ),
 };
 
 /* id for user defined functions & macros */
@@ -136,13 +156,17 @@ static const uint16_t PROGMEM fn_actions[] = {
     [9] =  ACTION_LAYER_TAP_KEY(1, KC_N),               // FN9 -  Tap=N, Hold=L1
     [10] = ACTION_MACRO(SHIFTINS),                      // FN10 -  Shift-Ins
     [11] = ACTION_MACRO(CTRLX),                         // FN11 -  C-x
-    [12] = ACTION_LAYER_SET(1, ON_BOTH),                // FN12 -  Set L1
+    [12] = ACTION_LAYER_SET(2, ON_BOTH),                // FN12 -  Set L1
     //[13] = ACTION_MODS_TAP_KEY(MOD_LCTL, KC_QUOTE),     // FN13
 };
 
 static const uint16_t PROGMEM fn_actions_1[] = {
     [0] = ACTION_LAYER_SET(0, ON_BOTH),                   // FN0  - Set Layer0
     [1] = ACTION_FUNCTION(TEENSY_KEY),                    // FN1  - Teensy key
+};
+
+static const uint16_t PROGMEM fn_actions_2[] = {
+    [0] = ACTION_LAYER_SET(0, ON_BOTH),                   // FN0  - Set Layer0
 };
 
 void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -220,6 +244,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
 
 #define FN_ACTIONS_SIZE     (sizeof(fn_actions)   / sizeof(fn_actions[0]))
 #define FN_ACTIONS_1_SIZE   (sizeof(fn_actions_1) / sizeof(fn_actions_1[0]))
+#define FN_ACTIONS_2_SIZE   (sizeof(fn_actions_2) / sizeof(fn_actions_2[0]))
 
 /*
  * translates Fn keycode to action
@@ -234,6 +259,9 @@ action_t keymap_fn_to_action(uint8_t keycode)
 
     if (layer == 1 && FN_INDEX(keycode) < FN_ACTIONS_1_SIZE) {
         action.code = pgm_read_word(&fn_actions_1[FN_INDEX(keycode)]);
+    }
+    if (layer == 2 && FN_INDEX(keycode) < FN_ACTIONS_2_SIZE) {
+        action.code = pgm_read_word(&fn_actions_2[FN_INDEX(keycode)]);
     }
 
     // by default, use fn_actions from default layer 0
