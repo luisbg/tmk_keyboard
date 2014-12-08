@@ -140,3 +140,6 @@ cub: all
 
 grota: OPT_DEFS += -DKEYMAP_GROTA
 grota: all
+
+buteck: OPT_DEFS += -DKEYMAP_BUTECK
+buteck: all
