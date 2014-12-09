@@ -1,20 +1,14 @@
 /*
+ * Bu-TECK inspired Layout. Credit to Oobly
+ * https://geekhack.org/index.php?topic=49721.msg1078758#msg1078758
+ *
  * NOTES:
  * ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT)
  * Works as a modifier key while holding, but registers a key on tap(press and release quickly)
- *
- * ACTION_LAYER_MOMENTARY(layernumber)
- * it activates when key is pressed and deactivate when released
  * From the docs it seems like the destination layer button must be the same or transparent.
- *
- * ACTION_LAYER_TOGGLE(layer)
- * Turns on layer with first type(press and release) and turns off with next.
  *
  * ACTION_LAYER_TAP_KEY(layer, key)
  * Turns on layer momentary while holding, but registers key on tap(press and release quickly).
- *
- * ACTION_LAYER_SET(layer, on)
- * Turn on layer only. layer_state = (1<<layer) [layer: 0-31]
  *
  * MACRO()
  *
@@ -27,53 +21,35 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------.           ,----------------------------------------------------.
      * |  Esc   |   1  |  2  |  3  |  4   |  5  |  |   |           | Tab  |   6   |   7   |   8  |  9   |  0   |    [{  |
      * |--------+------+-----+-----+------+------------|           |------+-------+-------+------+------+------+--------|
-     * |  ~     |   B  |  U  |  Q  |  .>  |  X  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
+     * |   `    |   B  |  U  |  Q  |  .>  |  X  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
      * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
-     * | LShift |   H  |  I  |  E  |  A   |  O  |------|           |------|   D   |   T   |   R  |  N   |   S  |    ;:  |
+     * | LCtrl  |   H  |  I  | E(S)|  A(L)|  O  |------|           |------|   D   |  T(L) | R(S) |  N   |   S  |    ;:  |
      * |--------+------+-----+-----+------+-----|Right |           | Down |-------+-------+------+------+------+--------|
-     * | LCtrl  |   K  |  Y  | '"  |  ,<  |  =+ |      |           |      |   J   |   G   |   W  |  V   |   Z  | RCtrl  |
+     * | LShift |   K  |  Y  | '"  |  ,<  |  =+ |      |           |      |   J   |   G   |   W  |  V   |   Z  | RShift |
      * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
-     *  | LAlt  | LGui |  /  |CtrlX| Lock |                                       | DeskL | DeskR| VolD | VolU | RAlt  |
+     *  | LGui  |   /  |  -  |CtrlX| Lock |                                       | DeskL | DeskR| VolD | VolU | Mute  |
      *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
-     *                                        |   -  | Home |       | PgUp | ~L1  |
+     *                                        | LAlt | Home |       | PgUp | RAlt |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      | End  |       |PgDown|      |      |
-     *                                 |Bkspc | ~L1  |------|       |------|Enter |Space |
-     *                                 |      |      |LShift|       |RShift|      |      |
+     *                                 |Space | Bkspc|------|       |------|Enter |Space |
+     *                                 |      |      |LCtrl |       |RCtrl |      |      |
      *                                 `--------------------'       `--------------------'
      *
-     * Layer 1:
+     *
+     * Layer divided in two so we can have transparent keys on the Layer Tap keys
+     * Layer 1: Left                                                  Layer2: Right
      * ,--------------------------------------------------.           ,--------------------------------------------------.
      * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |           | F12  |  F6  |  F7  |  F8  | F9   |  F10 |  Bkspc |
      * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Paste|           | Undo |  ~   |   (  |  Up  |   )  |  "   |  Del   |
+     * |        |  ^   |  [   |  !   |  ]   |  *   | Paste|           | Undo |  ~   |   (  |  Up  |   )  |  "   |  Del   |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  -   | Left | Down |Right | At   |  Enter |
      * |--------+------+------+------+------+------| Copy |           | Cut  |------+------+------+------+------+--------|
      * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |        |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-     *   |      |      |      |      |  $   |                                       |  €   |   £  | Mute | Mute |      |
-     *   `----------------------------------'                                       `----------------------------------'
-     *                                        ,-------------.       ,-------------.
-     *                                        |      |      |       |!MS_1 |      |
-     *                                 ,------|------|------|       |------+------+------.
-     *                                 |      |      |      |       |!MS_2 |      |      |
-     *                                 |      |      |------|       |------|      |      |
-     *                                 |      |      |      |       |!MS_3 |      |      |
-     *                                 `--------------------'       `--------------------'
-     *
-     * Layer 2:  (NOT USED. IT'S BUGGY)
-     * ,--------------------------------------------------.           ,--------------------------------------------------.
-     * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
-     * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-     * |        |      |      |      |      |      |      |           |      |      |MSWUp | MSUp |MSWDwn|      |        |
-     * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |        |      |      |      |      |      |------|           |------|      |MSLeft|MSDown|MSRght|      |        |
-     * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |        |      |      |      |      |      |      |           |      |      |MSWLft|      |MSWRht|      |        |
-     * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-     *   |      |      |      |      |      |                                       |      |      |      |      |      |
+     *   |      |      |      |      |  $   |                                       |  €   |   £  |      |      |      |
      *   `----------------------------------'                                       `----------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |      |      |       |      |      |
@@ -82,53 +58,53 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                 |      |      |------|       |------|      |      |
      *                                 |      |      |      |       |      |      |      |
      *                                 `--------------------'       `--------------------'
-
+     *
      */
 
     KEYMAP(  // Layer0, Left hand.
         ESC,    1,     2,     3,      4,   5,  FN8,
-        FN9,    B,     U,     Q,    DOT,   X,  LEFT,
-     LSHIFT,    H,     I,     E,      A,   O,
-      LCTRL,    K,     Y, QUOTE,  COMMA, EQL, RIGHT,
-       LALT, LGUI,  SLSH,   FN4,   STOP,
+        GRV,    B,     U,     Q,    DOT,   X,  LEFT,
+      LCTRL,    H,     I,   FN2,    FN1,   O,
+     LSHIFT,    K,     Y, QUOTE,  COMMA, EQL, RIGHT,
+       LGUI, SLSH, MINUS,   FN4,   STOP,
 
-                                        MINUS, HOME,
+                                       LALT,   HOME,
                                                 END,
-                                 BSPC,  FN1, LSHIFT,
+                                  SPC, BSPC,  LCTRL,
 
             // Right hand.
                 TAB,    6,    7,    8,   9,   0,   LBRC,
                  UP,    P,    C,    L,   M,   F,   RBRC,
-                        D,    T,    R,   N,   S, SCOLON,
-               DOWN,    J,    G,    W,   V,   Z,  RCTRL,
-                           FN5, FN6, VOLD, VOLU,   RALT,
+                        D,  FN0,  FN3,   N,   S, SCOLON,
+               DOWN,    J,    G,    W,   V,   Z, RSHIFT,
+                           FN5, FN6, VOLD, VOLU,   MUTE,
 
-         PGUP, FN1,
+         PGUP, RALT,
          PGDN,
-         RSHIFT, ENT, SPC
+         RCTRL, ENT, SPC
     ),
 
-    KEYMAP(  // Layer1, left hand
+    KEYMAP(  // Layer1, left hand, to be used with FN0
         TRNS,  F1,  F2,  F3,  F4,  F5,  F11,
-        GRV, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
+        TRNS, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
         CAPSLOCK, FN16, FN20, FN22, FN21, KP_PLUS,
         TRNS, FN14, FN8, FN12, SCOLON, FN23, COPY,
         TRNS, TRNS, TRNS, TRNS, FN13,
                                       TRNS, TRNS,
                                             TRNS,
                                 TRNS, TRNS, TRNS,
-        // right hand
-              F12,   F6,  F7,   F8,   F19,  F10,  BSPC,
-               UNDO, FN9, FN17, UP, FN18, FN24, DELETE,
-                 MINUS, LEFT, DOWN, RIGHT, FN11, ENTER,
-            CUT, SLASH, FN25, FN19, FN26, BSLASH, TRNS,
-                          TRNS, TRNS, MUTE, MUTE, TRNS,
-         TRNS, TRNS,
-         TRNS,
-         TRNS, TRNS, TRNS
+        // right hand empty
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, TRNS,
+                       TRNS,TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,
+        TRNS,
+        TRNS,TRNS,TRNS
     ),
 
-    KEYMAP(  // Layer2, left hand
+    KEYMAP(  // Layer2, left hand, empty
         TRNS, TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
         TRNS, TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
         TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
@@ -137,12 +113,12 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       TRNS, TRNS,
                                             TRNS,
                                 TRNS, TRNS, TRNS,
-        // right hand
-             TRNS, TRNS,    TRNS,    TRNS,     TRNS, TRNS, TRNS,
-            TRNS, TRNS, MS_WH_UP, MS_UP, MS_WH_DOWN, TRNS, TRNS,
-                   TRNS, MS_LEFT, MS_DOWN, MS_RIGHT, TRNS, TRNS,
-          TRNS, TRNS, MS_WH_LEFT, TRNS, MS_WH_RIGHT, TRNS, TRNS,
-                            TRNS,    TRNS,     TRNS, TRNS, TRNS,
+        // right hand, to be used with FN1
+              F12,   F6,  F7,   F8,   F19,  F10,  BSPC,
+               UNDO, FN9, FN17, UP, FN18, FN24, DELETE,
+                 MINUS, LEFT, DOWN, RIGHT, FN11, ENTER,
+            CUT, SLASH, FN25, FN19, FN26, BSLASH, TRNS,
+                          TRNS, TRNS, TRNS, TRNS, TRNS,
          TRNS, TRNS,
          TRNS,
          TRNS, TRNS, TRNS
@@ -152,8 +128,6 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* id for user defined functions & macros */
 enum function_id {
     TEENSY_KEY,
-    CUSTOM_KEY,
-    CTRLC_AND_LALT,
 };
 
 enum macro_id {
@@ -185,12 +159,14 @@ enum macro_id {
  * Fn action definition
  */
 static const uint16_t PROGMEM fn_actions[] = {
-    [1] =  ACTION_LAYER_MOMENTARY(1),                 // FN1  -  Momentary L1
-    [2] =  ACTION_LAYER_MOMENTARY(2),                 // FN2  -  Momentary L2
-    [4] =  ACTION_MACRO(CTRLX),                       // FN5  -  Ctrl-X
-    [5] =  ACTION_MACRO(CTRL_ALT_LEFT),               // FN6  -  Ctrl-Alt-Left
-    [6] =  ACTION_MACRO(CTRL_ALT_RIGHT),              // FN7  -  Ctrl-Alt-Right
-    [8] =  ACTION_MACRO(PIPE),                        // FN4  -  Tap=\, Hold=Left-Shift
+    [0] =  ACTION_LAYER_TAP_KEY(1, KC_T),             // FN0  -  Momentary Layer1 on A key
+    [1] =  ACTION_LAYER_TAP_KEY(2, KC_A),             // FN1  -  Momentary Layer1 on T key
+    [2] =  ACTION_MODS_TAP_KEY(MOD_LSFT, KC_E),       // FN2  -  Tap for E, Hold for Shift
+    [3] =  ACTION_MODS_TAP_KEY(MOD_LSFT, KC_R),       // FN3  -  Tap for R, Hold for Shift
+    [4] =  ACTION_MACRO(CTRLX),                       // FN4  -  Ctrl-X
+    [5] =  ACTION_MACRO(CTRL_ALT_LEFT),               // FN5  -  Ctrl-Alt-Left
+    [6] =  ACTION_MACRO(CTRL_ALT_RIGHT),              // FN6  -  Ctrl-Alt-Right
+    [8] =  ACTION_MACRO(PIPE),                        // FN8  -  Tap=\, Hold=Left-Shift
     [9] =  ACTION_MACRO(TILDE),                       // FN9  -  Tap=`, Hold=Left-Shift
     [10] = ACTION_MACRO(EXCLAMATION),                 // FN10 -  Tap=1, Hold=Left-Shift
     [11] = ACTION_MACRO(AT),                          // FN11 -  Tap=2, Hold=Left-Shift
@@ -232,30 +208,6 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
         _delay_ms(50);
         bootloader_jump(); // should not return
         print("not supported.\n");
-    }
-
-    if (id == CTRLC_AND_LALT) {
-      if (record->event.pressed) {
-        if (record->tap.count > 0 && !record->tap.interrupted) {
-          if (record->tap.interrupted) {
-            register_mods(MOD_BIT(KC_LALT));
-          }
-        } else {
-          register_mods(MOD_BIT(KC_LALT));
-        }
-      } else {
-        if (record->tap.count > 0 && !(record->tap.interrupted)) {
-          add_weak_mods(MOD_BIT(KC_LCTL));
-          send_keyboard_report();
-          register_code(KC_C);
-          unregister_code(KC_C);
-          del_weak_mods(MOD_BIT(KC_LCTL));
-          send_keyboard_report();
-          record->tap.count = 0;  // ad hoc: cancel tap
-        } else {
-          unregister_mods(MOD_BIT(KC_LALT));
-        }
-      }
     }
 }
 
