@@ -143,3 +143,6 @@ grota: all
 
 buteck: OPT_DEFS += -DKEYMAP_BUTECK
 buteck: all
+
+testing: OPT_DEFS += -DKEYMAP_TESTING
+testing: all

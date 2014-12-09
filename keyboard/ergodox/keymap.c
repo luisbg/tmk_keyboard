@@ -89,7 +89,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "keymap_grota.h"
 #elif defined(KEYMAP_BUTECK)
 #include "keymap_buteck.h"
-
+#elif defined(KEYMAP_TESTING)
+#include "keymap_testing.h"
 #else
 
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -223,7 +224,7 @@ uint8_t keymap_key_to_keycode(uint8_t layer, keypos_t key)
     }
 }
 
-#if defined(KEYMAP_CUB) || defined(KEYMAP_GROTA) || defined(KEYMAP_BUTECK)
+#if defined(KEYMAP_CUB) || defined(KEYMAP_GROTA) || defined(KEYMAP_BUTECK) || defined(KEYMAP_TESTING)
 
 // function keymap_fn_to_action will be defined in keymap_cub.h
 
