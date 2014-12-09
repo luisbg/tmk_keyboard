@@ -21,7 +21,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------.           ,----------------------------------------------------.
      * |  Esc   |   1  |  2  |  3  |  4   |  5  |  |   |           | Tab  |   6   |   7   |   8  |  9   |  0   |    [{  |
      * |--------+------+-----+-----+------+------------|           |------+-------+-------+------+------+------+--------|
-     * |   `    |   B  |  U  |  Q  |  .>  |  X  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
+     * |  Tab   |   B  |  U  |  Q  |  .>  |  X  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
      * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
      * | LCtrl  |   H  |  I  | E(S)|  A(L)|  O  |------|           |------|   D   |  T(L) | R(S) |  N   |   S  |    ;:  |
      * |--------+------+-----+-----+------+-----|Right |           | Down |-------+-------+------+------+------+--------|
@@ -43,7 +43,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,--------------------------------------------------.           ,--------------------------------------------------.
      * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |           | F12  |  F6  |  F7  |  F8  | F9   |  F10 |  Bkspc |
      * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-     * |        |  ^   |  [   |  !   |  ]   |  *   | Paste|           | Undo |  ~   |   (  |  Up  |   )  |  "   |  Del   |
+     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Paste|           | Undo |  ~   |   (  |  Up  |   )  |  "   |  Del   |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  -   | Left | Down |Right | At   |  Enter |
      * |--------+------+------+------+------+------| Copy |           | Cut  |------+------+------+------+------+--------|
@@ -55,7 +55,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                        |      |      |       |      |      |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      |      |       |      |      |      |
-     *                                 |      |      |------|       |------|      |      |
+     *                                 |      | Del  |------|       |------|      |      |
      *                                 |      |      |      |       |      |      |      |
      *                                 `--------------------'       `--------------------'
      *
@@ -63,10 +63,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     KEYMAP(  // Layer0, Left hand.
         ESC,    1,     2,     3,      4,   5,  FN8,
-        GRV,    B,     U,     Q,    DOT,   X,  LEFT,
+        TAB,    B,     U,     Q,    DOT,   X,  LEFT,
       LCTRL,    H,     I,   FN2,    FN1,   O,
      LSHIFT,    K,     Y, QUOTE,  COMMA, EQL, RIGHT,
-       LGUI, SLSH, MINUS,   FN4,   STOP,
+       LGUI, SLSH, MINUS,   FN4,   FN7,
 
                                        LALT,   HOME,
                                                 END,
@@ -86,13 +86,13 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     KEYMAP(  // Layer1, left hand, to be used with FN0
         TRNS,  F1,  F2,  F3,  F4,  F5,  F11,
-        TRNS, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
+        GRV, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
         CAPSLOCK, FN16, FN20, FN22, FN21, KP_PLUS,
         TRNS, FN14, FN8, FN12, SCOLON, FN23, COPY,
         TRNS, TRNS, TRNS, TRNS, FN13,
                                       TRNS, TRNS,
                                             TRNS,
-                                TRNS, TRNS, TRNS,
+                              TRNS, DELETE, TRNS,
         // right hand empty
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
@@ -134,6 +134,7 @@ enum macro_id {
   CTRLX,
   CTRL_ALT_LEFT,
   CTRL_ALT_RIGHT,
+  CTRL_ALT_L,
   PIPE,
   TILDE,
   EXCLAMATION,
@@ -166,6 +167,7 @@ static const uint16_t PROGMEM fn_actions[] = {
     [4] =  ACTION_MACRO(CTRLX),                       // FN4  -  Ctrl-X
     [5] =  ACTION_MACRO(CTRL_ALT_LEFT),               // FN5  -  Ctrl-Alt-Left
     [6] =  ACTION_MACRO(CTRL_ALT_RIGHT),              // FN6  -  Ctrl-Alt-Right
+    [7] =  ACTION_MACRO(CTRL_ALT_L),                  // FN7  -  Ctrl-Alt-L, set in the window manager to lock screen
     [8] =  ACTION_MACRO(PIPE),                        // FN8  -  Tap=\, Hold=Left-Shift
     [9] =  ACTION_MACRO(TILDE),                       // FN9  -  Tap=`, Hold=Left-Shift
     [10] = ACTION_MACRO(EXCLAMATION),                 // FN10 -  Tap=1, Hold=Left-Shift
@@ -366,6 +368,13 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     }
     return (record->event.pressed ?
             MACRO( I(15), D(LCTL), D(LALT), T(RIGHT), U(LALT), U(LCTL), END ) :
+            MACRO_NONE);
+  case CTRL_ALT_L:
+    if(!record->event.pressed) {
+      unregister_mods(MOD_BIT(KC_LCTL));
+    }
+    return (record->event.pressed ?
+            MACRO( I(15), D(LCTL), D(LALT), T(L), U(LALT), U(LCTL), END ) :
             MACRO_NONE);
   }
   return MACRO_NONE;
