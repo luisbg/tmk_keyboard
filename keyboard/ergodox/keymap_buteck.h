@@ -43,10 +43,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,--------------------------------------------------.           ,--------------------------------------------------.
      * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |           | F12  |  F6  |  F7  |  F8  | F9   |  F10 |  Bkspc |
      * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Paste|           | Undo |  ~   |   (  |  Up  |   )  |  "   |  Del   |
+     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Paste|           | PgUp |  ~   |   (  |  Up  |   )  |  "   |  Del   |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  -   | Left | Down |Right | At   |  Enter |
-     * |--------+------+------+------+------+------| Copy |           | Cut  |------+------+------+------+------+--------|
+     * |--------+------+------+------+------+------| Copy |           |PgDown|------+------+------+------+------+--------|
      * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |        |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
      *   |      |      |      |      |  $   |                                       |  €   |   £  |      |      |      |
@@ -115,9 +115,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 TRNS, TRNS, TRNS,
         // right hand, to be used with FN1
               F12,   F6,  F7,   F8,   F19,  F10,  BSPC,
-               UNDO, FN9, FN17, UP, FN18, FN24, DELETE,
-                 MINUS, LEFT, DOWN, RIGHT, FN11, ENTER,
-            CUT, SLASH, FN25, FN19, FN26, BSLASH, TRNS,
+               PGUP, FN9, FN17, UP, FN18, FN24, DELETE,
+
+              KP_MINUS, LEFT, DOWN, RIGHT, FN11, ENTER,
+           PGDN, SLASH, FN25, FN19, FN26, BSLASH, TRNS,
                           TRNS, TRNS, TRNS, TRNS, TRNS,
          TRNS, TRNS,
          TRNS,
