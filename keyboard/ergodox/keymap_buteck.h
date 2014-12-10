@@ -52,7 +52,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+------| Copy |           |PgDown|------+------+------+------+------+--------|
      * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |        |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-     *   |      |      |      |      |      |                                       |  $   |   €  |  £   |      |      |
+     *   |      |      |      |      |      |                                       |  $   |   €  |  £   |  Ñ   |      |
      *   `----------------------------------'                                       `----------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |      |      |       |      |      |
@@ -122,7 +122,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
               KP_MINUS, LEFT, DOWN, RIGHT, FN11, ENTER,
            PGDN, SLASH, FN25, FN19, FN26, BSLASH, TRNS,
-                          FN13, FN29, FN30, TRNS, TRNS,
+                          FN13, FN29, FN30, FN31, TRNS,
          TRNS, TRNS,
          TRNS,
          TRNS, TRNS, TRNS
@@ -162,6 +162,7 @@ enum macro_id {
   DQUOTES,
   EURO,
   POUND,
+  ENHE,
 };
 
 /*
@@ -199,6 +200,7 @@ static const uint16_t PROGMEM fn_actions[] = {
     [28] = ACTION_MACRO(DQUOTES),                     // FN28 -  Tap=', Hold=Left-Shift, Tap=Space
     [29] = ACTION_MACRO(EURO),                        // FN29 -  Tap=5, Hold=AltGr
     [30] = ACTION_MACRO(POUND),                       // FN30 -  Tap=4, Hold=Left-Shift, Hold=AltGr
+    [31] = ACTION_MACRO(ENHE),                        // FN31 -  Tap=N, Hold=AltGr
 };
 
 static const uint16_t PROGMEM fn_actions_1[] = {
@@ -401,6 +403,13 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     }
     return (record->event.pressed ?
             MACRO( I(15), D(RALT), D(LSHIFT), T(4), U(LSHIFT), U(RALT), END ) :
+            MACRO_NONE);
+  case ENHE:
+    if(!record->event.pressed) {
+      unregister_mods(MOD_BIT(KC_LCTL));
+    }
+    return (record->event.pressed ?
+            MACRO( I(15), D(RALT), T(N), U(RALT), END ) :
             MACRO_NONE);
   case CTRL_ALT_RIGHT:
     if(!record->event.pressed) {
