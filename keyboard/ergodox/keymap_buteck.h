@@ -52,7 +52,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+------| Copy |           |PgDown|------+------+------+------+------+--------|
      * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |        |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-     *   |      |      |      |      |  $   |                                       |  €   |   £  |      |      |      |
+     *   |      |      |      |      |      |                                       |  $   |   €  |  £   |      |      |
      *   `----------------------------------'                                       `----------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |      |      |       |      |      |
@@ -92,7 +92,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         FN24, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
         CAPSLOCK, FN16, FN20, FN22, FN21, KP_PLUS,
         TRNS, FN14, FN8, FN12, SCOLON, FN23, COPY,
-        TRNS, TRNS, TRNS, TRNS, FN13,
+        TRNS, TRNS, TRNS, TRNS, TRNS,
                                       TRNS, TRNS,
                                             TRNS,
                               TRNS, DELETE, TRNS,
@@ -122,7 +122,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
               KP_MINUS, LEFT, DOWN, RIGHT, FN11, ENTER,
            PGDN, SLASH, FN25, FN19, FN26, BSLASH, TRNS,
-                          TRNS, TRNS, TRNS, TRNS, TRNS,
+                          FN13, FN29, FN30, TRNS, TRNS,
          TRNS, TRNS,
          TRNS,
          TRNS, TRNS, TRNS
@@ -160,6 +160,8 @@ enum macro_id {
   GREATER_THAN,
   QUOTE,
   DQUOTES,
+  EURO,
+  POUND,
 };
 
 /*
@@ -195,6 +197,8 @@ static const uint16_t PROGMEM fn_actions[] = {
     [26] = ACTION_MACRO(GREATER_THAN),                // FN26 -  Tap=., Hold=Left-Shift
     [27] = ACTION_MACRO(QUOTE),                       // FN27 -  Tap=', Tap=Space
     [28] = ACTION_MACRO(DQUOTES),                     // FN28 -  Tap=', Hold=Left-Shift, Tap=Space
+    [29] = ACTION_MACRO(EURO),                        // FN29 -  Tap=5, Hold=AltGr
+    [30] = ACTION_MACRO(POUND),                       // FN30 -  Tap=4, Hold=Left-Shift, Hold=AltGr
 };
 
 static const uint16_t PROGMEM fn_actions_1[] = {
@@ -383,6 +387,20 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     }
     return (record->event.pressed ?
             MACRO( I(15), D(LCTL), D(LALT), T(LEFT), U(LALT), U(LCTL), END ) :
+            MACRO_NONE);
+  case EURO:
+    if(!record->event.pressed) {
+      unregister_mods(MOD_BIT(KC_LCTL));
+    }
+    return (record->event.pressed ?
+            MACRO( I(15), D(RALT), T(5), U(RALT), END ) :
+            MACRO_NONE);
+  case POUND:
+    if(!record->event.pressed) {
+      unregister_mods(MOD_BIT(KC_LCTL));
+    }
+    return (record->event.pressed ?
+            MACRO( I(15), D(RALT), D(LSHIFT), T(4), U(LSHIFT), U(RALT), END ) :
             MACRO_NONE);
   case CTRL_ALT_RIGHT:
     if(!record->event.pressed) {
