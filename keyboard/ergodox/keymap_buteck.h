@@ -3,6 +3,9 @@
  * https://geekhack.org/index.php?topic=49721.msg1078758#msg1078758
  *
  * NOTES:
+ * To be used with QWERTY US International keyboard layout
+ * http://en.wikipedia.org/wiki/QWERTY#US-International
+ *
  * ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT)
  * Works as a modifier key while holding, but registers a key on tap(press and release quickly)
  * From the docs it seems like the destination layer button must be the same or transparent.
@@ -65,7 +68,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ESC,    1,     2,     3,      4,   5,  FN8,
         TAB,    B,     U,     Q,    DOT,   X,  LEFT,
       LCTRL,    H,     I,   FN2,    FN1,   O,
-     LSHIFT,    K,     Y, QUOTE,  COMMA, EQL, RIGHT,
+     LSHIFT,    K,     Y,  FN27,  COMMA, EQL, RIGHT,
        LGUI, SLSH, MINUS,   FN4,   FN7,
 
                                        LALT,   HOME,
@@ -79,14 +82,14 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                DOWN,    J,    G,    W,   V,   Z, RSHIFT,
                            FN5, FN6, VOLD, VOLU,   MUTE,
 
-         PGUP, RALT,
+         PGUP, LALT,
          PGDN,
          RCTRL, ENT, SPC
     ),
 
     KEYMAP(  // Layer1, left hand, to be used with FN0
         TRNS,  F1,  F2,  F3,  F4,  F5,  F11,
-        GRV, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
+        FN24, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
         CAPSLOCK, FN16, FN20, FN22, FN21, KP_PLUS,
         TRNS, FN14, FN8, FN12, SCOLON, FN23, COPY,
         TRNS, TRNS, TRNS, TRNS, FN13,
@@ -115,7 +118,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 TRNS, TRNS, TRNS,
         // right hand, to be used with FN1
               F12,   F6,  F7,   F8,   F19,  F10,  BSPC,
-               PGUP, FN9, FN17, UP, FN18, FN24, DELETE,
+               PGUP, FN9, FN17, UP, FN18, FN28, DELETE,
 
               KP_MINUS, LEFT, DOWN, RIGHT, FN11, ENTER,
            PGDN, SLASH, FN25, FN19, FN26, BSLASH, TRNS,
@@ -152,9 +155,11 @@ enum macro_id {
   RBRACES,
   QUESTION,
   COLON,
-  DQUOTES,
+  GRAVE,
   SMALLER_THAN,
   GREATER_THAN,
+  QUOTE,
+  DQUOTES,
 };
 
 /*
@@ -170,13 +175,13 @@ static const uint16_t PROGMEM fn_actions[] = {
     [6] =  ACTION_MACRO(CTRL_ALT_RIGHT),              // FN6  -  Ctrl-Alt-Right
     [7] =  ACTION_MACRO(CTRL_ALT_L),                  // FN7  -  Ctrl-Alt-L, set in the window manager to lock screen
     [8] =  ACTION_MACRO(PIPE),                        // FN8  -  Tap=\, Hold=Left-Shift
-    [9] =  ACTION_MACRO(TILDE),                       // FN9  -  Tap=`, Hold=Left-Shift
+    [9] =  ACTION_MACRO(TILDE),                       // FN9  -  Tap=`, Hold=Left-Shift, Tap=Space
     [10] = ACTION_MACRO(EXCLAMATION),                 // FN10 -  Tap=1, Hold=Left-Shift
     [11] = ACTION_MACRO(AT),                          // FN11 -  Tap=2, Hold=Left-Shift
     [12] = ACTION_MACRO(HASH),                        // FN12 -  Tap=3, Hold=Left-Shift
     [13] = ACTION_MACRO(DOLLAR),                      // FN13 -  Tap=4, Hold=Left-Shift
     [14] = ACTION_MACRO(PERCENT),                     // FN14 -  Tap=5, Hold=Left-Shift
-    [15] = ACTION_MACRO(CARET),                       // FN15 -  Tap=6, Hold=Left-Shift
+    [15] = ACTION_MACRO(CARET),                       // FN15 -  Tap=6, Hold=Left-Shift. Tap=Space
     [16] = ACTION_MACRO(AMPERSAND),                   // FN16 -  Tap=7, Hold=Left-Shift
     [17] = ACTION_MACRO(OPEN_PARENTHESIS),            // FN17 -  Tap=9, Hold=Left-Shift
     [18] = ACTION_MACRO(CLOSE_PARENTHESIS),           // FN18 -  Tap=0, Hold=Left-Shift
@@ -185,9 +190,11 @@ static const uint16_t PROGMEM fn_actions[] = {
     [21] = ACTION_MACRO(RBRACES),                     // FN21 -  Tap=], Hold=Left-Shift
     [22] = ACTION_MACRO(QUESTION),                    // FN22 -  Tap=/, Hold=Left-Shift
     [23] = ACTION_MACRO(COLON),                       // FN23 -  Tap=;, Hold=Left-Shift
-    [24] = ACTION_MACRO(DQUOTES),                     // FN24 -  Tap=', Hold=Left-Shift
+    [24] = ACTION_MACRO(GRAVE),                       // FN24 -  Tap=`, Hold=Left-Shift, Tap=Space
     [25] = ACTION_MACRO(SMALLER_THAN),                // FN25 -  Tap=,, Hold=Left-Shift
     [26] = ACTION_MACRO(GREATER_THAN),                // FN26 -  Tap=., Hold=Left-Shift
+    [27] = ACTION_MACRO(QUOTE),                       // FN27 -  Tap=', Tap=Space
+    [28] = ACTION_MACRO(DQUOTES),                     // FN28 -  Tap=', Hold=Left-Shift, Tap=Space
 };
 
 static const uint16_t PROGMEM fn_actions_1[] = {
@@ -235,7 +242,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
       unregister_mods(MOD_BIT(KC_LCTL));
     }
     return (record->event.pressed ?
-            MACRO( I(15), D(LSFT), T(GRAVE), U(LSFT), END ) :
+            MACRO( I(15), D(LSFT), T(GRAVE), U(LSFT), T(SPC), END ) :
             MACRO_NONE);
   case EXCLAMATION:
     if(!record->event.pressed) {
@@ -277,7 +284,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
       unregister_mods(MOD_BIT(KC_LCTL));
     }
     return (record->event.pressed ?
-            MACRO( I(15), D(LSFT), T(6), U(LSFT), END ) :
+            MACRO( I(15), D(LSFT), T(6), U(LSFT), T(SPC), END ) :
             MACRO_NONE);
   case AMPERSAND:
     if(!record->event.pressed) {
@@ -335,12 +342,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     return (record->event.pressed ?
             MACRO( I(15), D(LSFT), T(SCOLON), U(LSFT), END ) :
             MACRO_NONE);
-  case DQUOTES:
+  case GRAVE:
     if(!record->event.pressed) {
       unregister_mods(MOD_BIT(KC_LCTL));
     }
     return (record->event.pressed ?
-            MACRO( I(15), D(LSFT), T(QUOTE), U(LSFT), END ) :
+            MACRO( I(15), T(GRAVE), T(SPC), END ) :
             MACRO_NONE);
   case SMALLER_THAN:
     if(!record->event.pressed) {
@@ -355,6 +362,20 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     }
     return (record->event.pressed ?
             MACRO( I(15), D(LSFT), T(DOT), U(LSFT), END ) :
+            MACRO_NONE);
+  case QUOTE:
+    if(!record->event.pressed) {
+      unregister_mods(MOD_BIT(KC_LCTL));
+    }
+    return (record->event.pressed ?
+            MACRO( I(15), T(QUOTE), T(SPC), END ) :
+            MACRO_NONE);
+  case DQUOTES:
+    if(!record->event.pressed) {
+      unregister_mods(MOD_BIT(KC_LCTL));
+    }
+    return (record->event.pressed ?
+            MACRO( I(15), D(LSFT), T(QUOTE), U(LSFT), T(SPC), END ) :
             MACRO_NONE);
   case CTRL_ALT_LEFT:
     if(!record->event.pressed) {
