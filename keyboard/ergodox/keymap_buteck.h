@@ -3,8 +3,7 @@
  * https://geekhack.org/index.php?topic=49721.msg1078758#msg1078758
  *
  * NOTES:
- * To be used with QWERTY US International keyboard layout
- * http://en.wikipedia.org/wiki/QWERTY#US-International
+ * To be used with QWERTY US 101-key keyboard layout
  *
  * ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT)
  * Works as a modifier key while holding, but registers a key on tap(press and release quickly)
@@ -33,7 +32,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *  | LGui  |   /  |  -  |CtrlX| Lock |                                       | DeskL | DeskR| VolD | VolU | Mute  |
      *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
-     *                                        | LAlt | Home |       | PgUp | RAlt |
+     *                                        | LAlt | Home |       | PgUp | LAlt |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      | End  |       |PgDown|      |      |
      *                                 |Space | Bkspc|------|       |------|Enter |Space |
@@ -68,7 +67,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ESC,    1,     2,     3,      4,   5,  FN8,
         TAB,    B,     U,     Q,    DOT,   X,  LEFT,
       LCTRL,    H,     I,   FN2,    FN1,   O,
-     LSHIFT,    K,     Y,  FN27,  COMMA, EQL, RIGHT,
+     LSHIFT,    K,     Y, QUOTE,  COMMA, EQL, RIGHT,
        LGUI, SLSH, MINUS,   FN4,   FN7,
 
                                        LALT,   HOME,
@@ -89,7 +88,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     KEYMAP(  // Layer1, left hand, to be used with FN0
         TRNS,  F1,  F2,  F3,  F4,  F5,  F11,
-        FN24, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
+        GRAVE, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
         CAPSLOCK, FN16, FN20, FN22, FN21, KP_PLUS,
         TRNS, FN14, FN8, FN12, SCOLON, FN23, COPY,
         TRNS, TRNS, TRNS, TRNS, TRNS,
@@ -100,7 +99,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, TRNS,
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
                        TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,
         TRNS,
@@ -118,11 +117,11 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 TRNS, TRNS, TRNS,
         // right hand, to be used with FN1
               F12,   F6,  F7,   F8,   F19,  F10,  BSPC,
-               PGUP, FN9, FN17, UP, FN18, FN28, DELETE,
+               PGUP, FN9, FN17, UP, FN18, FN26, DELETE,
 
               KP_MINUS, LEFT, DOWN, RIGHT, FN11, ENTER,
-           PGDN, SLASH, FN25, FN19, FN26, BSLASH, TRNS,
-                          FN13, FN29, FN30, FN31, TRNS,
+           PGDN, SLASH, FN24, FN19, FN25, BSLASH, TRNS,
+                            FN13, FN27, FN28, FN29, NO,
          TRNS, TRNS,
          TRNS,
          TRNS, TRNS, TRNS
@@ -155,10 +154,8 @@ enum macro_id {
   RBRACES,
   QUESTION,
   COLON,
-  GRAVE,
   SMALLER_THAN,
   GREATER_THAN,
-  QUOTE,
   DQUOTES,
   EURO,
   POUND,
@@ -178,13 +175,13 @@ static const uint16_t PROGMEM fn_actions[] = {
     [6] =  ACTION_MACRO(CTRL_ALT_RIGHT),              // FN6  -  Ctrl-Alt-Right
     [7] =  ACTION_MACRO(CTRL_ALT_L),                  // FN7  -  Ctrl-Alt-L, set in the window manager to lock screen
     [8] =  ACTION_MACRO(PIPE),                        // FN8  -  Tap=\, Hold=Left-Shift
-    [9] =  ACTION_MACRO(TILDE),                       // FN9  -  Tap=`, Hold=Left-Shift, Tap=Space
+    [9] =  ACTION_MACRO(TILDE),                       // FN9  -  Tap=`, Hold=Left-Shift
     [10] = ACTION_MACRO(EXCLAMATION),                 // FN10 -  Tap=1, Hold=Left-Shift
     [11] = ACTION_MACRO(AT),                          // FN11 -  Tap=2, Hold=Left-Shift
     [12] = ACTION_MACRO(HASH),                        // FN12 -  Tap=3, Hold=Left-Shift
     [13] = ACTION_MACRO(DOLLAR),                      // FN13 -  Tap=4, Hold=Left-Shift
     [14] = ACTION_MACRO(PERCENT),                     // FN14 -  Tap=5, Hold=Left-Shift
-    [15] = ACTION_MACRO(CARET),                       // FN15 -  Tap=6, Hold=Left-Shift. Tap=Space
+    [15] = ACTION_MACRO(CARET),                       // FN15 -  Tap=6, Hold=Left-Shift
     [16] = ACTION_MACRO(AMPERSAND),                   // FN16 -  Tap=7, Hold=Left-Shift
     [17] = ACTION_MACRO(OPEN_PARENTHESIS),            // FN17 -  Tap=9, Hold=Left-Shift
     [18] = ACTION_MACRO(CLOSE_PARENTHESIS),           // FN18 -  Tap=0, Hold=Left-Shift
@@ -193,14 +190,12 @@ static const uint16_t PROGMEM fn_actions[] = {
     [21] = ACTION_MACRO(RBRACES),                     // FN21 -  Tap=], Hold=Left-Shift
     [22] = ACTION_MACRO(QUESTION),                    // FN22 -  Tap=/, Hold=Left-Shift
     [23] = ACTION_MACRO(COLON),                       // FN23 -  Tap=;, Hold=Left-Shift
-    [24] = ACTION_MACRO(GRAVE),                       // FN24 -  Tap=`, Hold=Left-Shift, Tap=Space
-    [25] = ACTION_MACRO(SMALLER_THAN),                // FN25 -  Tap=,, Hold=Left-Shift
-    [26] = ACTION_MACRO(GREATER_THAN),                // FN26 -  Tap=., Hold=Left-Shift
-    [27] = ACTION_MACRO(QUOTE),                       // FN27 -  Tap=', Tap=Space
-    [28] = ACTION_MACRO(DQUOTES),                     // FN28 -  Tap=', Hold=Left-Shift, Tap=Space
-    [29] = ACTION_MACRO(EURO),                        // FN29 -  Tap=5, Hold=AltGr
-    [30] = ACTION_MACRO(POUND),                       // FN30 -  Tap=4, Hold=Left-Shift, Hold=AltGr
-    [31] = ACTION_MACRO(ENHE),                        // FN31 -  Tap=N, Hold=AltGr
+    [24] = ACTION_MACRO(SMALLER_THAN),                // FN24 -  Tap=,, Hold=Left-Shift
+    [25] = ACTION_MACRO(GREATER_THAN),                // FN25 -  Tap=., Hold=Left-Shift
+    [26] = ACTION_MACRO(DQUOTES),                     // FN26 -  Tap=', Hold=Left-Shift
+    [27] = ACTION_MACRO(EURO),                        // FN27 -  Hold=AltGr, Tap='=', Tap=e
+    [28] = ACTION_MACRO(POUND),                       // FN28 -  Hold=AltGr, Tap=l, Tap=-
+    [29] = ACTION_MACRO(ENHE),                        // FN29 -  Hold=AltGr, Tap=n, Hold,LShift, Tap=Grave
 };
 
 static const uint16_t PROGMEM fn_actions_1[] = {
@@ -248,7 +243,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
       unregister_mods(MOD_BIT(KC_LCTL));
     }
     return (record->event.pressed ?
-            MACRO( I(15), D(LSFT), T(GRAVE), U(LSFT), T(SPC), END ) :
+            MACRO( I(15), D(LSFT), T(GRAVE), U(LSFT), END ) :
             MACRO_NONE);
   case EXCLAMATION:
     if(!record->event.pressed) {
@@ -290,7 +285,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
       unregister_mods(MOD_BIT(KC_LCTL));
     }
     return (record->event.pressed ?
-            MACRO( I(15), D(LSFT), T(6), U(LSFT), T(SPC), END ) :
+            MACRO( I(15), D(LSFT), T(6), U(LSFT), END ) :
             MACRO_NONE);
   case AMPERSAND:
     if(!record->event.pressed) {
@@ -348,13 +343,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     return (record->event.pressed ?
             MACRO( I(15), D(LSFT), T(SCOLON), U(LSFT), END ) :
             MACRO_NONE);
-  case GRAVE:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
-    return (record->event.pressed ?
-            MACRO( I(15), T(GRAVE), T(SPC), END ) :
-            MACRO_NONE);
   case SMALLER_THAN:
     if(!record->event.pressed) {
       unregister_mods(MOD_BIT(KC_LCTL));
@@ -369,19 +357,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     return (record->event.pressed ?
             MACRO( I(15), D(LSFT), T(DOT), U(LSFT), END ) :
             MACRO_NONE);
-  case QUOTE:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
-    return (record->event.pressed ?
-            MACRO( I(15), T(QUOTE), T(SPC), END ) :
-            MACRO_NONE);
   case DQUOTES:
     if(!record->event.pressed) {
       unregister_mods(MOD_BIT(KC_LCTL));
     }
     return (record->event.pressed ?
-            MACRO( I(15), D(LSFT), T(QUOTE), U(LSFT), T(SPC), END ) :
+            MACRO( I(15), D(LSFT), T(QUOTE), U(LSFT), END ) :
             MACRO_NONE);
   case CTRL_ALT_LEFT:
     if(!record->event.pressed) {
@@ -395,21 +376,22 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
       unregister_mods(MOD_BIT(KC_LCTL));
     }
     return (record->event.pressed ?
-            MACRO( I(15), D(RALT), T(5), U(RALT), END ) :
+            MACRO( I(15), D(RALT), T(EQL), T(E), U(RALT), END ) :
             MACRO_NONE);
   case POUND:
     if(!record->event.pressed) {
       unregister_mods(MOD_BIT(KC_LCTL));
     }
     return (record->event.pressed ?
-            MACRO( I(15), D(RALT), D(LSHIFT), T(4), U(LSHIFT), U(RALT), END ) :
+            MACRO( I(15), D(RALT), T(L), T(MINUS), U(RALT), END ) :
             MACRO_NONE);
   case ENHE:
     if(!record->event.pressed) {
       unregister_mods(MOD_BIT(KC_LCTL));
     }
     return (record->event.pressed ?
-            MACRO( I(15), D(RALT), T(N), U(RALT), END ) :
+            MACRO( I(15), D(RALT), T(N), D(LSHIFT),  T(GRAVE), U(LSHIFT),
+                   U(RALT), END ) :
             MACRO_NONE);
   case CTRL_ALT_RIGHT:
     if(!record->event.pressed) {
