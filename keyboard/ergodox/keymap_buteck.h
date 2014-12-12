@@ -21,22 +21,22 @@
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Layer 0:
      * ,-----------------------------------------------.           ,----------------------------------------------------.
-     * |  Esc   |   1  |  2  |  3  |  4   |  5  |  |   |           | Tab  |   6   |   7   |   8  |  9   |  0   |    [{  |
+     * |  Esc   |   1  |  2  |  3  |  4   |  5  |  /   |           |   |  |   6   |   7   |   8  |  9   |  0   |    [{  |
      * |--------+------+-----+-----+------+------------|           |------+-------+-------+------+------+------+--------|
      * |  Tab   |   B  |  U  |  Q  |  .>  |  X  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
      * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
      * | LCtrl  |   H  |  I  | E(S)|  A(L)|  O  |------|           |------|   D   |  T(L) | R(S) |  N   |   S  |    ;:  |
      * |--------+------+-----+-----+------+-----|Right |           | Down |-------+-------+------+------+------+--------|
-     * | LShift |   K  |  Y  | '"  |  ,<  |  =+ |      |           |      |   J   |   G   |   W  |  V   |   Z  | RShift |
+     * | Ctrl-X |   K  |  Y  | '"  |  ,<  |  =+ |      |           |      |   J   |   G   |   W  |  V   |   Z  |  VolU  |
      * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
-     *  | LGui  |   /  |  -  |CtrlX| Lock |                                       | DeskL | DeskR| VolD | VolU | Mute  |
+     *  | Mute  |   ~  |  -  | LSft| LCtrl|                                       | LCtrl | LSft | PrevD| NextD|  VolD |
      *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        | LAlt | Home |       | PgUp | LAlt |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      | End  |       |PgDown|      |      |
-     *                                 |Space | Bkspc|------|       |------|Enter |Space |
-     *                                 |      |      |LCtrl |       |RCtrl |      |      |
+     *                                 | Tab  | Bkspc|------|       |------|Enter |Space |
+     *                                 |      |      | LGui |       | Lock |      |      |
      *                                 `--------------------'       `--------------------'
      *
      *
@@ -45,56 +45,56 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,--------------------------------------------------.           ,--------------------------------------------------.
      * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |           | F12  |  F6  |  F7  |  F8  | F9   |  F10 |  Bkspc |
      * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Paste|           | PgUp |  ~   |   (  |  Up  |   )  |  "   |  Del   |
+     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Home |           | PgUp |  ~   |   (  |  Up  |   )  |  $   |  Del   |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  -   | Left | Down |Right | At   |  Enter |
-     * |--------+------+------+------+------+------| Copy |           |PgDown|------+------+------+------+------+--------|
+     * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  -   | Left | Down |Right |  "   |  Enter |
+     * |--------+------+------+------+------+------|  End |           |PgDown|------+------+------+------+------+--------|
      * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |        |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-     *   |      |      |      |      |      |                                       |  $   |   €  |  £   |  Ñ   |      |
+     *   |      |  €   |   £  |      |      |                                       |      |      |  Ñ   |  At  |      |
      *   `----------------------------------'                                       `----------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |      |      |       |      |      |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      |      |       |      |      |      |
-     *                                 |      | Del  |------|       |------|      |      |
+     *                                 |  Esc | Del  |------|       |------|      |      |
      *                                 |      |      |      |       |      |      |      |
      *                                 `--------------------'       `--------------------'
      *
      */
 
     KEYMAP(  // Layer0, Left hand.
-        ESC,    1,     2,     3,      4,   5,  FN8,
+        ESC,    1,     2,     3,      4,   5,  SLSH,
         TAB,    B,     U,     Q,    DOT,   X,  LEFT,
       LCTRL,    H,     I,   FN2,    FN1,   O,
-     LSHIFT,    K,     Y, QUOTE,  COMMA, EQL, RIGHT,
-       LGUI, SLSH, MINUS,   FN4,   FN7,
+        FN4,    K,     Y, QUOTE,  COMMA, EQL, RIGHT,
+       MUTE,  FN9, MINUS, LSHIFT, LCTRL,
 
                                        LALT,   HOME,
                                                 END,
-                                  SPC, BSPC,  LCTRL,
+                                  TAB, BSPC,   LGUI,
 
             // Right hand.
-                TAB,    6,    7,    8,   9,   0,   LBRC,
+                FN8,    6,    7,    8,   9,   0,   LBRC,
                  UP,    P,    C,    L,   M,   F,   RBRC,
                         D,  FN0,  FN3,   N,   S, SCOLON,
-               DOWN,    J,    G,    W,   V,   Z, RSHIFT,
-                           FN5, FN6, VOLD, VOLU,   MUTE,
+               DOWN,    J,    G,    W,   V,   Z,   VOLU,
+                          LCTRL, LSHIFT, FN5, FN6, VOLD,
 
          PGUP, LALT,
          PGDN,
-         RCTRL, ENT, SPC
+         FN7, ENT, SPC
     ),
 
     KEYMAP(  // Layer1, left hand, to be used with FN0
         TRNS,  F1,  F2,  F3,  F4,  F5,  F11,
-        GRAVE, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, PASTE,
+        GRAVE, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, HOME,
         CAPSLOCK, FN16, FN20, FN22, FN21, KP_PLUS,
-        TRNS, FN14, FN8, FN12, SCOLON, FN23, COPY,
-        TRNS, TRNS, TRNS, TRNS, TRNS,
+        TRNS, FN14, FN8, FN12, SCOLON, FN23, END,
+        TRNS, FN27, FN28, TRNS, TRNS,
                                       TRNS, TRNS,
                                             TRNS,
-                              TRNS, DELETE, TRNS,
+                               ESC, DELETE, TRNS,
         // right hand empty
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
@@ -117,11 +117,11 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 TRNS, TRNS, TRNS,
         // right hand, to be used with FN1
               F12,   F6,  F7,   F8,   F19,  F10,  BSPC,
-               PGUP, FN9, FN17, UP, FN18, FN26, DELETE,
+               PGUP, FN9, FN17, UP, FN18, FN13, DELETE,
 
-              KP_MINUS, LEFT, DOWN, RIGHT, FN11, ENTER,
-           PGDN, SLASH, FN24, FN19, FN25, BSLASH, TRNS,
-                            FN13, FN27, FN28, FN29, NO,
+              KP_MINUS, LEFT, DOWN, RIGHT, FN26, ENTER,
+             PGDN, SLASH, FN24, FN19, FN25, BSLASH, NO,
+                            TRNS, TRNS, FN29, FN11, NO,
          TRNS, TRNS,
          TRNS,
          TRNS, TRNS, TRNS
