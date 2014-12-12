@@ -157,8 +157,8 @@ static const uint16_t PROGMEM fn_actions[] = {
     [5] =  ACTION_MACRO(CTRL_ALT_LEFT),               // FN5  -  Ctrl-Alt-Left
     [6] =  ACTION_MACRO(CTRL_ALT_RIGHT),              // FN6  -  Ctrl-Alt-Right
     [7] =  ACTION_MACRO(CTRL_ALT_L),                  // FN7  -  Ctrl-Alt-L, set in the window manager to lock screen
-    [8] =  ACTION_MODS_KEY(MOD_LSFT, KC_BSLASH),      // FN8  -  Hold=Left-Shift, Tap=\
-    [9] =  ACTION_MODS_KEY(MOD_LSFT, KC_GRAVE),       // FN9  -  Hold=Left-Shift, Tap=`
+    [8] =  ACTION_MODS_KEY(MOD_LSFT, KC_BSLASH),      // FN8  -  Hold=Left-Shift, Tap='\'
+    [9] =  ACTION_MODS_KEY(MOD_LSFT, KC_GRAVE),       // FN9  -  Hold=Left-Shift, Tap='`'
     [10] = ACTION_MODS_KEY(MOD_LSFT, KC_1),           // FN10 -  Hold=Left-Shift, Tap=1
     [11] = ACTION_MODS_KEY(MOD_LSFT, KC_2),           // FN11 -  Hold=Left-Shift, Tap=2
     [12] = ACTION_MODS_KEY(MOD_LSFT, KC_3),           // FN12 -  Hold=Left-Shift, Tap=3
@@ -168,14 +168,14 @@ static const uint16_t PROGMEM fn_actions[] = {
     [16] = ACTION_MODS_KEY(MOD_LSFT, KC_7),           // FN16 -  Hold=Left-Shift, Tap=7
     [17] = ACTION_MACRO(OPEN_PARENTHESIS),            // FN17 -  Unshifted='(', Shifted=PgUp
     [18] = ACTION_MACRO(CLOSE_PARENTHESIS),           // FN18 -  Unshifted=')', Shifted=PgDown
-    [19] = ACTION_MODS_KEY(MOD_LSFT, KC_MINUS),       // FN19 -  Hold=Left-Shift, Tap=-
-    [20] = ACTION_MODS_KEY(MOD_LSFT, KC_LBRACKET),    // FN20 -  Hold=Left-Shift, Tap=[
-    [21] = ACTION_MODS_KEY(MOD_LSFT, KC_RBRACKET),    // FN21 -  Hold=Left-Shift, Tap=]
-    [22] = ACTION_MODS_KEY(MOD_LSFT, KC_SLASH),       // FN22 -  Hold=Left-Shift, Tap=/
-    [23] = ACTION_MODS_KEY(MOD_LSFT, KC_SCOLON),      // FN23 -  Hold=Left-Shift, Tap=;
-    [24] = ACTION_MODS_KEY(MOD_LSFT, KC_COMMA),       // FN24 -  Hold=Left-Shift, Tap=,
-    [25] = ACTION_MODS_KEY(MOD_LSFT, KC_DOT),         // FN25 -  Hold=Left-Shift, Tap=.
-    [26] = ACTION_MODS_KEY(MOD_LSFT, KC_QUOTE),       // FN26 -  Hold=Left-Shift, Tap='
+    [19] = ACTION_MODS_KEY(MOD_LSFT, KC_MINUS),       // FN19 -  Hold=Left-Shift, Tap='-'
+    [20] = ACTION_MODS_KEY(MOD_LSFT, KC_LBRACKET),    // FN20 -  Hold=Left-Shift, Tap='['
+    [21] = ACTION_MODS_KEY(MOD_LSFT, KC_RBRACKET),    // FN21 -  Hold=Left-Shift, Tap=']'
+    [22] = ACTION_MODS_KEY(MOD_LSFT, KC_SLASH),       // FN22 -  Hold=Left-Shift, Tap='/'
+    [23] = ACTION_MODS_KEY(MOD_LSFT, KC_SCOLON),      // FN23 -  Hold=Left-Shift, Tap=';'
+    [24] = ACTION_MODS_KEY(MOD_LSFT, KC_COMMA),       // FN24 -  Hold=Left-Shift, Tap=','
+    [25] = ACTION_MODS_KEY(MOD_LSFT, KC_DOT),         // FN25 -  Hold=Left-Shift, Tap='.'
+    [26] = ACTION_MODS_KEY(MOD_LSFT, KC_QUOTE),       // FN26 -  Hold=Left-Shift, Tap="'"
     [27] = ACTION_MACRO(EURO),                        // FN27 -  Hold=AltGr, Tap='=', Tap=e
     [28] = ACTION_MACRO(POUND),                       // FN28 -  Hold=AltGr, Tap=l, Tap=-
     [29] = ACTION_MACRO(ENHE),                        // FN29 -  Hold=AltGr, Tap=n, Hold,LShift, Tap=Grave
@@ -206,81 +206,37 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 }
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
+  if(!record->event.pressed) {
+    unregister_mods(MOD_BIT(KC_LCTL));
+    return MACRO_NONE;
+  }
+
   switch (id) {
   case CTRLX:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
-    return (record->event.pressed ?
-            MACRO( I(15), D(LCTL), T(X), U(LCTL), END ) :
-            MACRO_NONE);
+    return MACRO( I(15), D(LCTL), T(X), U(LCTL), END );
   case CTRL_ALT_LEFT:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
-    return (record->event.pressed ?
-            MACRO( I(15), D(LCTL), D(LALT), T(LEFT), U(LALT), U(LCTL), END ) :
-            MACRO_NONE);
+    return MACRO( I(15), D(LCTL), D(LALT), T(LEFT), U(LALT), U(LCTL), END );
   case CTRL_ALT_RIGHT:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
-    return (record->event.pressed ?
-            MACRO( I(15), D(LCTL), D(LALT), T(RIGHT), U(LALT), U(LCTL), END ) :
-            MACRO_NONE);
+    return MACRO( I(15), D(LCTL), D(LALT), T(RIGHT), U(LALT), U(LCTL), END );
   case OPEN_PARENTHESIS:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
     if(!get_mods() & (MOD_BIT(KC_LSHIFT)))    // unshifted: open parenthesis
-      return (record->event.pressed ?
-              MACRO( I(15), D(LSFT), T(9), U(LSFT), END ) :
-              MACRO_NONE);
+      return MACRO( I(15), D(LSFT), T(9), U(LSFT), END );
     else                                      // shifted: page up
-      return (record->event.pressed ?
-              MACRO( I(15), T(PGUP), END ) :
-              MACRO_NONE);
+      return MACRO( I(15), T(PGUP), END );
   case CLOSE_PARENTHESIS:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
     if(!get_mods() & (MOD_BIT(KC_LSHIFT)))    // unshifted: close parenthesis
-      return (record->event.pressed ?
-            MACRO( I(15), D(LSFT), T(0), U(LSFT), END ) :
-            MACRO_NONE);
+      return MACRO( I(15), D(LSFT), T(0), U(LSFT), END );
     else                                      // shifted: page down
-      return (record->event.pressed ?
-            MACRO( I(15), T(PGDOWN), END ) :
-            MACRO_NONE);
+      return MACRO( I(15), T(PGDOWN), END );
   case EURO:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
-    return (record->event.pressed ?
-            MACRO( I(15), D(RALT), T(EQL), T(E), U(RALT), END ) :
-            MACRO_NONE);
+    return MACRO( I(15), D(RALT), T(EQL), T(E), U(RALT), END );
   case POUND:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
-    return (record->event.pressed ?
-            MACRO( I(15), D(RALT), T(L), T(MINUS), U(RALT), END ) :
-            MACRO_NONE);
+    return MACRO( I(15), D(RALT), T(L), T(MINUS), U(RALT), END );
   case ENHE:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
-    return (record->event.pressed ?
-            MACRO( I(15), D(RALT), T(N), D(LSHIFT),  T(GRAVE), U(LSHIFT),
-                   U(RALT), END ) :
-            MACRO_NONE);
+    return MACRO( I(15), D(RALT), T(N), D(LSHIFT),  T(GRAVE), U(LSHIFT), U(RALT),
+                  END );
   case CTRL_ALT_L:
-    if(!record->event.pressed) {
-      unregister_mods(MOD_BIT(KC_LCTL));
-    }
-    return (record->event.pressed ?
-            MACRO( I(15), D(LCTL), D(LALT), T(L), U(LALT), U(LCTL), END ) :
-            MACRO_NONE);
+    return MACRO( I(15), D(LCTL), D(LALT), T(L), U(LALT), U(LCTL), END );
   }
   return MACRO_NONE;
 }
