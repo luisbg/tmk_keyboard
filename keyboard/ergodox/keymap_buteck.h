@@ -138,6 +138,8 @@ enum macro_id {
   CTRL_ALT_LEFT,
   CTRL_ALT_RIGHT,
   CTRL_ALT_L,
+  OPEN_PARENTHESIS,
+  CLOSE_PARENTHESIS,
   EURO,
   POUND,
   ENHE,
@@ -164,8 +166,8 @@ static const uint16_t PROGMEM fn_actions[] = {
     [14] = ACTION_MODS_KEY(MOD_LSFT, KC_5),           // FN14 -  Hold=Left-Shift, Tap=5
     [15] = ACTION_MODS_KEY(MOD_LSFT, KC_6),           // FN15 -  Hold=Left-Shift, Tap=6
     [16] = ACTION_MODS_KEY(MOD_LSFT, KC_7),           // FN16 -  Hold=Left-Shift, Tap=7
-    [17] = ACTION_MODS_KEY(MOD_LSFT, KC_9),           // FN17 -  Hold=Left-Shift, Tap=9
-    [18] = ACTION_MODS_KEY(MOD_LSFT, KC_0),           // FN18 -  Hold=Left-Shift, Tap=0
+    [17] = ACTION_MACRO(OPEN_PARENTHESIS),            // FN17 -  Unshifted='(', Shifted=PgUp
+    [18] = ACTION_MACRO(CLOSE_PARENTHESIS),           // FN18 -  Unshifted=')', Shifted=PgDown
     [19] = ACTION_MODS_KEY(MOD_LSFT, KC_MINUS),       // FN19 -  Hold=Left-Shift, Tap=-
     [20] = ACTION_MODS_KEY(MOD_LSFT, KC_LBRACKET),    // FN20 -  Hold=Left-Shift, Tap=[
     [21] = ACTION_MODS_KEY(MOD_LSFT, KC_RBRACKET),    // FN21 -  Hold=Left-Shift, Tap=]
@@ -225,6 +227,30 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     }
     return (record->event.pressed ?
             MACRO( I(15), D(LCTL), D(LALT), T(RIGHT), U(LALT), U(LCTL), END ) :
+            MACRO_NONE);
+  case OPEN_PARENTHESIS:
+    if(!record->event.pressed) {
+      unregister_mods(MOD_BIT(KC_LCTL));
+    }
+    if(!get_mods() & (MOD_BIT(KC_LSHIFT)))    // unshifted: open parenthesis
+      return (record->event.pressed ?
+              MACRO( I(15), D(LSFT), T(9), U(LSFT), END ) :
+              MACRO_NONE);
+    else                                      // shifted: page up
+      return (record->event.pressed ?
+              MACRO( I(15), T(PGUP), END ) :
+              MACRO_NONE);
+  case CLOSE_PARENTHESIS:
+    if(!record->event.pressed) {
+      unregister_mods(MOD_BIT(KC_LCTL));
+    }
+    if(!get_mods() & (MOD_BIT(KC_LSHIFT)))    // unshifted: close parenthesis
+      return (record->event.pressed ?
+            MACRO( I(15), D(LSFT), T(0), U(LSFT), END ) :
+            MACRO_NONE);
+    else                                      // shifted: page down
+      return (record->event.pressed ?
+            MACRO( I(15), T(PGDOWN), END ) :
             MACRO_NONE);
   case EURO:
     if(!record->event.pressed) {
