@@ -14,124 +14,7 @@
  *
  * MACRO()
  *
- * ACTION_FUNCTION(id, opt)
- * Not sure how it's different from ACTION_FUNCTION_TAP
- *
  */
-static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /* Layer 0:
-     * ,-----------------------------------------------.           ,----------------------------------------------------.
-     * |  Esc   |   1  |  2  |  3  |  4   |  5  |  /   |           |   |  |   6   |   7   |   8  |  9   |  0   |    [{  |
-     * |--------+------+-----+-----+------+------------|           |------+-------+-------+------+------+------+--------|
-     * |  Tab   |   B  |  U  |  Q  |  .>  |  X  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
-     * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
-     * | LCtrl  |   H  |  I  | E(S)|  A(L)|  O  |------|           |------|   D   |  T(L) | R(S) |  N   |   S  |    ;:  |
-     * |--------+------+-----+-----+------+-----|Right |           | Down |-------+-------+------+------+------+--------|
-     * | Ctrl-X |   K  |  Y  | '"  |  ,<  |  =+ |      |           |      |   J   |   G   |   W  |  V   |   Z  |  VolU  |
-     * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
-     *  | Mute  |   ~  |  -  | LSft| LCtrl|                                       | LCtrl | LSft | PrevD| NextD|  VolD |
-     *  `---------------------------------'                                       `------------------------------------'
-     *                                        ,-------------.       ,-------------.
-     *                                        | LAlt | Home |       | PgUp | LAlt |
-     *                                 ,------|------|------|       |------+------+------.
-     *                                 |      |      | End  |       |PgDown|      |      |
-     *                                 | Tab  | Bkspc|------|       |------|Enter |Space |
-     *                                 |      |      | LGui |       | Lock |      |      |
-     *                                 `--------------------'       `--------------------'
-     *
-     *
-     * Layer divided in two so we can have transparent keys on the Layer Tap keys
-     * Layer 1: Left                                                  Layer2: Right
-     * ,--------------------------------------------------.           ,--------------------------------------------------.
-     * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |           | F12  |  F6  |  F7  |  F8  | F9   |  F10 |  Bkspc |
-     * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Home |           | PgUp |  ~   |   (  |  Up  |   )  |  $   |  Del   |
-     * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  -   | Left | Down |Right |  "   |  Enter |
-     * |--------+------+------+------+------+------|  End |           |PgDown|------+------+------+------+------+--------|
-     * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |        |
-     * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-     *   |      |  €   |   £  |      |      |                                       |      |      |  Ñ   |  At  |      |
-     *   `----------------------------------'                                       `----------------------------------'
-     *                                        ,-------------.       ,-------------.
-     *                                        |      |      |       |      |      |
-     *                                 ,------|------|------|       |------+------+------.
-     *                                 |      |      |      |       |      |      |      |
-     *                                 |  Esc | Del  |------|       |------|      |      |
-     *                                 |      |      |      |       |      |      |      |
-     *                                 `--------------------'       `--------------------'
-     *
-     */
-
-    KEYMAP(  // Layer0, Left hand.
-        ESC,    1,     2,     3,      4,   5,  SLSH,
-        TAB,    B,     U,     Q,    DOT,   X,  LEFT,
-      LCTRL,    H,     I,   FN2,    FN1,   O,
-        FN4,    K,     Y, QUOTE,  COMMA, EQL, RIGHT,
-       MUTE,  FN9, MINUS, LSHIFT, LCTRL,
-
-                                       LALT,   HOME,
-                                                END,
-                                  TAB, BSPC,   LGUI,
-
-            // Right hand.
-                FN8,    6,    7,    8,   9,   0,   LBRC,
-                 UP,    P,    C,    L,   M,   F,   RBRC,
-                        D,  FN0,  FN3,   N,   S, SCOLON,
-               DOWN,    J,    G,    W,   V,   Z,   VOLU,
-                          LCTRL, LSHIFT, FN5, FN6, VOLD,
-
-         PGUP, LALT,
-         PGDN,
-         FN7, ENT, SPC
-    ),
-
-    KEYMAP(  // Layer1, left hand, to be used with FN0
-        TRNS,  F1,  F2,  F3,  F4,  F5,  F11,
-        GRAVE, FN15, LBRACKET, FN10, RBRACKET, KP_ASTERISK, HOME,
-        CAPSLOCK, FN16, FN20, FN22, FN21, KP_PLUS,
-        TRNS, FN14, FN8, FN12, SCOLON, FN23, END,
-        TRNS, FN27, FN28, TRNS, TRNS,
-                                      TRNS, TRNS,
-                                            TRNS,
-                               ESC, DELETE, TRNS,
-        // right hand empty
-             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-                       TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,
-        TRNS,
-        TRNS,TRNS,TRNS
-    ),
-
-    KEYMAP(  // Layer2, left hand, empty
-        TRNS, TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
-        TRNS, TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
-        TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
-        TRNS, TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
-        TRNS, TRNS, TRNS, TRNS, TRNS,
-                                      TRNS, TRNS,
-                                            TRNS,
-                                TRNS, TRNS, TRNS,
-        // right hand, to be used with FN1
-              F12,   F6,  F7,   F8,   F19,  F10,  BSPC,
-               PGUP, FN9, FN17, UP, FN18, FN13, DELETE,
-
-              KP_MINUS, LEFT, DOWN, RIGHT, FN26, ENTER,
-             PGDN, SLASH, FN24, FN19, FN25, BSLASH, NO,
-                            TRNS, TRNS, FN29, FN11, NO,
-         TRNS, TRNS,
-         TRNS,
-         TRNS, TRNS, TRNS
-    ),
-};
-
-/* id for user defined functions & macros */
-enum function_id {
-    TEENSY_KEY,
-};
 
 enum macro_id {
   CTRLX,
@@ -181,29 +64,149 @@ static const uint16_t PROGMEM fn_actions[] = {
     [29] = ACTION_MACRO(ENHE),                        // FN29 -  Hold=AltGr, Tap=n, Hold,LShift, Tap=Grave
 };
 
-static const uint16_t PROGMEM fn_actions_1[] = {
-    [0] = ACTION_LAYER_SET(0, ON_BOTH),                   // FN0  - Set Layer0
-    [1] = ACTION_FUNCTION(TEENSY_KEY),                    // FN1  - Teensy key
+/* Define function actions for readability of keymap below */
+#define KC_TML       KC_FN0
+#define KC_AML       KC_FN1
+#define KC_EMS       KC_FN2
+#define KC_RMS       KC_FN3
+#define KC_CTRLX     KC_FN4
+#define KC_CTALLEFT  KC_FN5
+#define KC_CTALRGHT  KC_FN6
+#define KC_CTRLALTL  KC_FN7
+#define KC_PIPE      KC_FN8
+#define KC_TILDE     KC_FN9
+#define KC_EXCL      KC_FN10
+#define KC_AT        KC_FN11
+#define KC_HASH      KC_FN12
+#define KC_DOLLR     KC_FN13
+#define KC_PRCNT     KC_FN14
+#define KC_CARET     KC_FN15
+#define KC_AMPRS     KC_FN16
+#define KC_OPAREN    KC_FN17
+#define KC_CPAREN    KC_FN18
+#define KC_UNDRSC    KC_FN19
+#define KC_OCUBRC    KC_FN20
+#define KC_CCUBRC    KC_FN21
+#define KC_QUESTN    KC_FN22
+#define KC_COLON     KC_FN23
+#define KC_SMLRT     KC_FN24
+#define KC_GRTRT     KC_FN25
+#define KC_DQUOT     KC_FN26
+#define KC_EURO      KC_FN27
+#define KC_POUND     KC_FN28
+#define KC_ENHE      KC_FN29
+
+static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    /* Layer 0:
+     * ,-----------------------------------------------.           ,----------------------------------------------------.
+     * |  Esc   |   1  |  2  |  3  |  4   |  5  |  /   |           |   |  |   6   |   7   |   8  |  9   |  0   |    [{  |
+     * |--------+------+-----+-----+------+------------|           |------+-------+-------+------+------+------+--------|
+     * |  Tab   |   B  |  U  |  Q  |  .>  |  X  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
+     * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
+     * | LCtrl  |   H  |  I  | E(S)|  A(L)|  O  |------|           |------|   D   |  T(L) | R(S) |  N   |   S  |    ;:  |
+     * |--------+------+-----+-----+------+-----|Right |           | Down |-------+-------+------+------+------+--------|
+     * | Ctrl-X |   K  |  Y  | '"  |  ,<  |  =+ |      |           |      |   J   |   G   |   W  |  V   |   Z  |  VolU  |
+     * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
+     *  | Mute  |   ~  |  -  | LSft| LCtrl|                                       | LCtrl | LSft | PrevD| NextD|  VolD |
+     *  `---------------------------------'                                       `------------------------------------'
+     *                                        ,-------------.       ,-------------.
+     *                                        | LAlt | Home |       | PgUp | LAlt |
+     *                                 ,------|------|------|       |------+------+------.
+     *                                 |      |      | End  |       |PgDown|      |      |
+     *                                 | Tab  | Bkspc|------|       |------|Enter |Space |
+     *                                 |      |      | LGui |       | Lock |      |      |
+     *                                 `--------------------'       `--------------------'
+     *
+     *
+     * Layer divided in two so we can have transparent keys on the Layer Tap keys
+     * Layer 1: Left                                                  Layer2: Right
+     * ,--------------------------------------------------.           ,--------------------------------------------------.
+     * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |           | F12  |  F6  |  F7  |  F8  | F9   |  F10 |  Bkspc |
+     * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Home |           | PgUp |  ~   |   (  |  Up  |   )  |  $   |  Del   |
+     * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+     * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  -   | Left | Down |Right |  "   |  Enter |
+     * |--------+------+------+------+------+------|  End |           |PgDown|------+------+------+------+------+--------|
+     * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |        |
+     * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+     *   |      |  €   |   £  |      |      |                                       |      |      |  Ñ   |  At  |      |
+     *   `----------------------------------'                                       `----------------------------------'
+     *                                        ,-------------.       ,-------------.
+     *                                        |      |      |       |      |      |
+     *                                 ,------|------|------|       |------+------+------.
+     *                                 |      |      |      |       |      |      |      |
+     *                                 |  Esc | Del  |------|       |------|      |      |
+     *                                 |      |      |      |       |      |      |      |
+     *                                 `--------------------'       `--------------------'
+     *
+     */
+
+    KEYMAP(  // Layer0, Left hand.
+        ESC,     1,       2,      3,      4,   5,  SLSH,
+        TAB,     B,       U,      Q,    DOT,   X,  LEFT,
+      LCTRL,     H,       I,    EMS,    AML,   O,
+      CTRLX,     K,       Y,  QUOTE,  COMMA, EQL, RIGHT,
+       MUTE, TILDE,   MINUS, LSHIFT,  LCTRL,
+
+                                       LALT, HOME,
+                                              END,
+                                  TAB, BSPC, LGUI,
+
+             // Right hand.
+             PIPE,    6,    7,      8,        9,        0,   LBRC,
+               UP,    P,    C,      L,        M,        F,   RBRC,
+                D,  TML,  RMS,      N,        S,   SCOLON,
+             DOWN,    J,    G,      W,        V,        Z,   VOLU,
+                        LCTRL, LSHIFT, CTALLEFT, CTALRGHT,   VOLD,
+
+           PGUP,    LALT,
+           PGDN,
+        CTRLALTL, ENT, SPC
+    ),
+
+    KEYMAP(  // Layer1, left hand, to be used with TML
+            TRNS,    F1,       F2,     F3,       F4,          F5,  F11,
+           GRAVE, CARET, LBRACKET,   EXCL, RBRACKET, KP_ASTERISK, HOME,
+        CAPSLOCK, AMPRS,   OCUBRC, QUESTN,   CCUBRC,     KP_PLUS,
+            TRNS, PRCNT,     PIPE,   HASH,   SCOLON,       COLON,  END,
+            TRNS,  EURO,    POUND,   TRNS,     TRNS,
+
+                                       TRNS, TRNS,
+                                             TRNS,
+                                ESC, DELETE, TRNS,
+
+             // right hand empty
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+                       TRNS,TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,
+        TRNS,
+        TRNS,TRNS,TRNS
+    ),
+
+    KEYMAP(  // Layer2, left hand, empty
+        TRNS, TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
+        TRNS, TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
+        TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
+        TRNS, TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
+        TRNS, TRNS, TRNS, TRNS, TRNS,
+                                      TRNS, TRNS,
+                                            TRNS,
+                                TRNS, TRNS, TRNS,
+
+             // right hand, to be used with AML
+                  F12,     F6,     F7,     F8,    F19,    F10,   BSPC,
+                 PGUP,  TILDE, OPAREN,     UP, CPAREN,  DOLLR, DELETE,
+             KP_MINUS,   LEFT,   DOWN,  RIGHT,  DQUOT,  ENTER,
+                 PGDN,  SLASH,  SMLRT, UNDRSC,  GRTRT, BSLASH,     NO,
+                                 TRNS,   TRNS,   ENHE,     AT,     NO,
+         TRNS, TRNS,
+         TRNS,
+         TRNS, TRNS, TRNS
+    ),
 };
-
-static const uint16_t PROGMEM fn_actions_2[] = {
-    [0] = ACTION_LAYER_SET(0, ON_BOTH),                   // FN0  - Set Layer0
-};
-
-void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-    // print("action_function called\n");
-    // print("id  = "); phex(id); print("\n");
-    // print("opt = "); phex(opt); print("\n");
-
-    if (id == TEENSY_KEY) {
-        clear_keyboard();
-        print("\n\nJump to bootloader... ");
-        _delay_ms(50);
-        bootloader_jump(); // should not return
-        print("not supported.\n");
-    }
-}
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   if(!record->event.pressed) {
@@ -241,10 +244,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   return MACRO_NONE;
 }
 
-#define FN_ACTIONS_SIZE     (sizeof(fn_actions)   / sizeof(fn_actions[0]))
-#define FN_ACTIONS_1_SIZE   (sizeof(fn_actions_1) / sizeof(fn_actions_1[0]))
-#define FN_ACTIONS_2_SIZE   (sizeof(fn_actions_2) / sizeof(fn_actions_2[0]))
-
 /*
  * translates Fn keycode to action
  * for some layers, use different translation table
@@ -256,17 +255,11 @@ action_t keymap_fn_to_action(uint8_t keycode)
     action_t action;
     action.code = ACTION_NO;
 
-    if (layer == 1 && FN_INDEX(keycode) < FN_ACTIONS_1_SIZE) {
-        action.code = pgm_read_word(&fn_actions_1[FN_INDEX(keycode)]);
-    }
-    if (layer == 2 && FN_INDEX(keycode) < FN_ACTIONS_2_SIZE) {
-        action.code = pgm_read_word(&fn_actions_2[FN_INDEX(keycode)]);
-    }
-
     // by default, use fn_actions from default layer 0
     // this is needed to get mapping for same key, that was used switch to some layer,
     // to have possibility to switch layers back
-    if (action.code == ACTION_NO && FN_INDEX(keycode) < FN_ACTIONS_SIZE) {
+    if (action.code == ACTION_NO &&
+        FN_INDEX(keycode) < (sizeof(fn_actions)   / sizeof(fn_actions[0]))) {
         action.code = pgm_read_word(&fn_actions[FN_INDEX(keycode)]);
     }
 
