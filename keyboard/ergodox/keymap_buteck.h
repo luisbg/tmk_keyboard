@@ -101,13 +101,13 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------.           ,----------------------------------------------------.
      * |  Esc   |   1  |  2  |  3  |  4   |  5  |  /   |           |   |  |   6   |   7   |   8  |  9   |  0   |    [{  |
      * |--------+------+-----+-----+------+------------|           |------+-------+-------+------+------+------+--------|
-     * |  Tab   |   B  |  U  |  Q  |  .>  |  X  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
+     * |  Tab   |   B  |  U  | ,<  |  .>  |  Q  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
      * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
      * | LCtrl  |   H  |  I  | E(S)|  A(L)|  O  |------|           |------|   D   |  T(L) | R(S) |  N   |   S  |    ;:  |
      * |--------+------+-----+-----+------+-----|Right |           | Down |-------+-------+------+------+------+--------|
-     * | Ctrl-X |   K  |  Y  | '"  |  ,<  |  =+ |      |           |      |   J   |   G   |   W  |  V   |   Z  |  VolU  |
+     * | Ctrl-X |   K  |  Y  | '"  |  -_  |  X  |      |           |      |   J   |   G   |   W  |  V   |   Z  |  VolU  |
      * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
-     *  | Mute  |   ~  |  -  | LSft| LCtrl|                                       | LCtrl | LSft | PrevD| NextD|  VolD |
+     *  | Mute  |   ~  |  =  | LSft| LCtrl|                                       | LCtrl | LSft | PrevD| NextD|  VolD |
      *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        | LAlt | Home |       | PgUp | LAlt |
@@ -125,7 +125,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
      * |   `    |  ^   |  [   |  !   |  ]   |  *   | Home |           | PgUp |  ~   |   (  |  Up  |   )  |  $   |  Del   |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  -   | Left | Down |Right |  "   |  Enter |
+     * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  =   | Left | Down |Right |  "   |  Enter |
      * |--------+------+------+------+------+------|  End |           |PgDown|------+------+------+------+------+--------|
      * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |        |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -143,10 +143,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     KEYMAP(  // Layer0, Left hand.
         ESC,     1,       2,      3,      4,   5,  SLSH,
-        TAB,     B,       U,      Q,    DOT,   X,  LEFT,
-      LCTRL,     H,       I,    EMS,    AML,   O,
-      CTRLX,     K,       Y,  QUOTE,  COMMA, EQL, RIGHT,
-       MUTE, TILDE,   MINUS, LSHIFT,  LCTRL,
+        TAB,     B,       U,  COMMA,    DOT,   Q,  LEFT,
+      LCTRL,     H,       I,    AML,    EMS,   O,
+      CTRLX,     K,       Y,  QUOTE,  MINUS,   X, RIGHT,
+       MUTE, TILDE,     EQL, LSHIFT,  LCTRL,
 
                                        LALT, HOME,
                                               END,
@@ -199,7 +199,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              // right hand, to be used with AML
                   F12,     F6,     F7,     F8,    F19,    F10,   BSPC,
                  PGUP,  TILDE, OPAREN,     UP, CPAREN,  DOLLR, DELETE,
-             KP_MINUS,   LEFT,   DOWN,  RIGHT,  DQUOT,  ENTER,
+                  EQL,   LEFT,   DOWN,  RIGHT,  DQUOT,  ENTER,
                  PGDN,  SLASH,  SMLRT, UNDRSC,  GRTRT, BSLASH,     NO,
                                  TRNS,   TRNS,   ENHE,     AT,     NO,
          TRNS, TRNS,
@@ -222,15 +222,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   case CTRL_ALT_RIGHT:
     return MACRO( I(15), D(LCTL), D(LALT), T(RIGHT), U(LALT), U(LCTL), END );
   case OPEN_PARENTHESIS:
-    if(!get_mods() & (MOD_BIT(KC_LSHIFT)))    // unshifted: open parenthesis
       return MACRO( I(15), D(LSFT), T(9), U(LSFT), END );
-    else                                      // shifted: page up
-      return MACRO( I(15), T(PGUP), END );
   case CLOSE_PARENTHESIS:
-    if(!get_mods() & (MOD_BIT(KC_LSHIFT)))    // unshifted: close parenthesis
       return MACRO( I(15), D(LSFT), T(0), U(LSFT), END );
-    else                                      // shifted: page down
-      return MACRO( I(15), T(PGDOWN), END );
   case EURO:
     return MACRO( I(15), D(RALT), T(EQL), T(E), U(RALT), END );
   case POUND:
