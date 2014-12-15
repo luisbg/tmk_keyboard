@@ -17,7 +17,6 @@
  */
 
 enum macro_id {
-  CTRLX,
   CTRL_ALT_LEFT,
   CTRL_ALT_RIGHT,
   CTRL_ALT_L,
@@ -32,11 +31,11 @@ enum macro_id {
  * Fn action definition
  */
 static const uint16_t PROGMEM fn_actions[] = {
-    [0] =  ACTION_LAYER_TAP_KEY(1, KC_T),             // FN0  -  Momentary Layer1 on A key
-    [1] =  ACTION_LAYER_TAP_KEY(2, KC_A),             // FN1  -  Momentary Layer1 on T key
-    [2] =  ACTION_MODS_TAP_KEY(MOD_LSFT, KC_E),       // FN2  -  Tap for E, Hold for Shift
+    [0] =  ACTION_LAYER_TAP_KEY(1, KC_T),             // FN0  -  Momentary Layer1 on T key
+    [1] =  ACTION_LAYER_TAP_KEY(2, KC_E),             // FN1  -  Momentary Layer2 on E key
+    [2] =  ACTION_MODS_TAP_KEY(MOD_LSFT, KC_A),       // FN2  -  Tap for A, Hold for Shift
     [3] =  ACTION_MODS_TAP_KEY(MOD_LSFT, KC_R),       // FN3  -  Tap for R, Hold for Shift
-    [4] =  ACTION_MACRO(CTRLX),                       // FN4  -  Ctrl-X
+    [4] =  ACTION_MODS_TAP_KEY(MOD_LALT, KC_I),       // FN4  -  Tap for I, Hold for Alt
     [5] =  ACTION_MACRO(CTRL_ALT_LEFT),               // FN5  -  Ctrl-Alt-Left
     [6] =  ACTION_MACRO(CTRL_ALT_RIGHT),              // FN6  -  Ctrl-Alt-Right
     [7] =  ACTION_MACRO(CTRL_ALT_L),                  // FN7  -  Ctrl-Alt-L, set in the window manager to lock screen
@@ -62,14 +61,15 @@ static const uint16_t PROGMEM fn_actions[] = {
     [27] = ACTION_MACRO(EURO),                        // FN27 -  Hold=AltGr, Tap='=', Tap=e
     [28] = ACTION_MACRO(POUND),                       // FN28 -  Hold=AltGr, Tap=l, Tap=-
     [29] = ACTION_MACRO(ENHE),                        // FN29 -  Hold=AltGr, Tap=n, Hold,LShift, Tap=Grave
+    [30] = ACTION_MODS_TAP_KEY(MOD_LALT, KC_N),       // FN30 -  Tap for N, Hold for Alt
 };
 
 /* Define function actions for readability of keymap below */
 #define KC_TML       KC_FN0
-#define KC_AML       KC_FN1
-#define KC_EMS       KC_FN2
+#define KC_EML       KC_FN1
+#define KC_AMS       KC_FN2
 #define KC_RMS       KC_FN3
-#define KC_CTRLX     KC_FN4
+#define KC_IMA       KC_FN4
 #define KC_CTALLEFT  KC_FN5
 #define KC_CTALRGHT  KC_FN6
 #define KC_CTRLALTL  KC_FN7
@@ -95,22 +95,23 @@ static const uint16_t PROGMEM fn_actions[] = {
 #define KC_EURO      KC_FN27
 #define KC_POUND     KC_FN28
 #define KC_ENHE      KC_FN29
+#define KC_NMA       KC_FN30
 
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Layer 0:
      * ,-----------------------------------------------.           ,----------------------------------------------------.
-     * |  Esc   |   1  |  2  |  3  |  4   |  5  |  /   |           |   |  |   6   |   7   |   8  |  9   |  0   |    [{  |
+     * |  Esc   |   1  |  2  |  3  |  4   |  5  |  /   |           |   |  |   6   |   7   |   8  |  9   |   0  |    [{  |
      * |--------+------+-----+-----+------+------------|           |------+-------+-------+------+------+------+--------|
      * |  Tab   |   B  |  U  | ,<  |  .>  |  Q  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
      * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
-     * | LCtrl  |   H  |  I  | E(S)|  A(L)|  O  |------|           |------|   D   |  T(L) | R(S) |  N   |   S  |    ;:  |
+     * | LCtrl  |   H  |I(A) | A(S)|  E(L)|  O  |------|           |------|   D   |  T(L) | R(S) |  N(A)|   S  |    ;:  |
      * |--------+------+-----+-----+------+-----|Right |           | Down |-------+-------+------+------+------+--------|
-     * | Ctrl-X |   K  |  Y  | '"  |  -_  |  X  |      |           |      |   J   |   G   |   W  |  V   |   Z  |  VolU  |
+     * | LShift |   K  |  Y  | '"  |  -_  |  X  |      |           |      |   J   |   G   |   W  |  V   |   Z  |  VolU  |
      * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
-     *  | Mute  |   ~  |  =  | LSft| LCtrl|                                       | LCtrl | LSft | PrevD| NextD|  VolD |
+     *  | Mute  |   ~  |  =  | LAlt| LCtrl|                                       | LCtrl | LAlt | PrevD| NextD|  VolD |
      *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
-     *                                        | LAlt | Home |       | PgUp | LAlt |
+     *                                        |LShift| Home |       | PgUp |LShift|
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      | End  |       |PgDown|      |      |
      *                                 | Tab  | Bkspc|------|       |------|Enter |Space |
@@ -127,9 +128,9 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  =   | Left | Down |Right |  "   |  Enter |
      * |--------+------+------+------+------+------|  End |           |PgDown|------+------+------+------+------+--------|
-     * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |        |
+     * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |   NO   |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-     *   |      |  €   |   £  |      |      |                                       |      |      |  Ñ   |  At  |      |
+     *   |  NO  |  €   |  £   |      |      |                                       |      |      |  ñ   |  At  |  NO  |
      *   `----------------------------------'                                       `----------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |      |      |       |      |      |
@@ -144,22 +145,22 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KEYMAP(  // Layer0, Left hand.
         ESC,     1,       2,      3,      4,   5,  SLSH,
         TAB,     B,       U,  COMMA,    DOT,   Q,  LEFT,
-      LCTRL,     H,       I,    AML,    EMS,   O,
-      CTRLX,     K,       Y,  QUOTE,  MINUS,   X, RIGHT,
-       MUTE, TILDE,     EQL, LSHIFT,  LCTRL,
+      LCTRL,     H,     IMA,    AMS,    EML,   O,
+     LSHIFT,     K,       Y,  QUOTE,  MINUS,   X, RIGHT,
+       MUTE, TILDE,     EQL,   LALT,  LCTRL,
 
-                                       LALT, HOME,
+                                     LSHIFT, HOME,
                                               END,
                                   TAB, BSPC, LGUI,
 
              // Right hand.
              PIPE,    6,    7,      8,        9,        0,   LBRC,
                UP,    P,    C,      L,        M,        F,   RBRC,
-                D,  TML,  RMS,      N,        S,   SCOLON,
+                D,  TML,  RMS,    NMA,        S,   SCOLON,
              DOWN,    J,    G,      W,        V,        Z,   VOLU,
-                        LCTRL, LSHIFT, CTALLEFT, CTALRGHT,   VOLD,
+                        LCTRL,   LALT, CTALLEFT, CTALRGHT,   VOLD,
 
-           PGUP,    LALT,
+           PGUP, LSHIFT,
            PGDN,
         CTRLALTL, ENT, SPC
     ),
@@ -169,7 +170,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            GRAVE, CARET, LBRACKET,   EXCL, RBRACKET, KP_ASTERISK, HOME,
         CAPSLOCK, AMPRS,   OCUBRC, QUESTN,   CCUBRC,     KP_PLUS,
             TRNS, PRCNT,     PIPE,   HASH,   SCOLON,       COLON,  END,
-            TRNS,  EURO,    POUND,   TRNS,     TRNS,
+              NO,  EURO,    POUND,   TRNS,     TRNS,
 
                                        TRNS, TRNS,
                                              TRNS,
@@ -215,8 +216,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   }
 
   switch (id) {
-  case CTRLX:
-    return MACRO( I(15), D(LCTL), T(X), U(LCTL), END );
   case CTRL_ALT_LEFT:
     return MACRO( I(15), D(LCTL), D(LALT), T(LEFT), U(LALT), U(LCTL), END );
   case CTRL_ALT_RIGHT:
