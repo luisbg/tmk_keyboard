@@ -128,7 +128,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  =   | Left | Down |Right |  "   |  Enter |
      * |--------+------+------+------+------+------|  End |           |PgDown|------+------+------+------+------+--------|
-     * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   |   _  |  >   |  \   |   NO   |
+     * |        |  %   |  |   |  #   |  ;   |  :   |      |           |      |  /   |  <   | Esc  |  >   |  \   |   NO   |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
      *   |  NO  |  €   |  £   |      |      |                                       |      |      |  ñ   |  At  |  NO  |
      *   `----------------------------------'                                       `----------------------------------'
@@ -201,7 +201,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   F12,     F6,     F7,     F8,    F19,    F10,   BSPC,
                  PGUP,  TILDE, OPAREN,     UP, CPAREN,  DOLLR, DELETE,
                   EQL,   LEFT,   DOWN,  RIGHT,  DQUOT,  ENTER,
-                 PGDN,  SLASH,  SMLRT, UNDRSC,  GRTRT, BSLASH,     NO,
+                 PGDN,  SLASH,  SMLRT,    ESC,  GRTRT, BSLASH,     NO,
                                  TRNS,   TRNS,   ENHE,     AT,     NO,
          TRNS, TRNS,
          TRNS,
