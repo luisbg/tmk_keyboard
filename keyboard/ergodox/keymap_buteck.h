@@ -102,10 +102,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------.           ,----------------------------------------------------.
      * |  Esc   |   1  |  2  |  3  |  4   |  5  |  /   |           |   |  |   6   |   7   |   8  |  9   |   0  |    [{  |
      * |--------+------+-----+-----+------+------------|           |------+-------+-------+------+------+------+--------|
-     * |  Tab   |   B  |  U  | ,<  |  .>  |  Q  | Left |           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
+     * |  Tab   |   B  |  U  | ,<  |  .>  |  Q  | Right|           |  Up  |   P   |   C   |   L  |  M   |   F  |    ]}  |
      * |--------+------+-----+-----+------+-----|      |           |      |-------+-------+------+------+------+--------|
      * | LCtrl  |   H  |I(A) | A(S)|  E(L)|  O  |------|           |------|   D   |  T(L) | R(S) |  N(A)|   S  |    ;:  |
-     * |--------+------+-----+-----+------+-----|Right |           | Down |-------+-------+------+------+------+--------|
+     * |--------+------+-----+-----+------+-----| Left |           | Down |-------+-------+------+------+------+--------|
      * | LShift |   K  |  Y  | '"  |  -_  |  X  |      |           |      |   J   |   G   |   W  |  V   |   Z  |  VolU  |
      * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
      *  | Mute  |   ~  |  =  | LAlt| LCtrl|                                       | LAlt | LCtrl | PrevD| NextD|  VolD |
@@ -144,9 +144,9 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     KEYMAP(  // Layer0, Left hand.
         ESC,     1,       2,      3,      4,   5,  SLSH,
-        TAB,     B,       U,  COMMA,    DOT,   Q,  LEFT,
+        TAB,     B,       U,  COMMA,    DOT,   Q, RIGHT,
       LCTRL,     H,     IMA,    AMS,    EML,   O,
-     LSHIFT,     K,       Y,  QUOTE,  MINUS,   X, RIGHT,
+     LSHIFT,     K,       Y,  QUOTE,  MINUS,   X,  LEFT,
        MUTE, TILDE,     EQL,   LALT,  LCTRL,
 
                                      LSHIFT, HOME,
