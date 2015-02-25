@@ -124,7 +124,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,--------------------------------------------------.           ,--------------------------------------------------.
      * |        |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |           | F12  |  F6  |  F7  |  F8  | F9   |  F10 |  Bkspc |
      * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Home |           | PgUp |  ~   |   (  |  Up  |   )  |  $   |  Del   |
+     * |   `    |  ^   |  [   |  !   |  ]   |  *   | Left |           |  Up  |  ~   |   (  |  Up  |   )  |  $   |  Del   |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |CapsLck |  &   |  {   |  ?   |  }   |  +   |------|           |------|  =   | Left | Down |Right |  "   |  Enter |
      * |--------+------+------+------+------+------|  End |           |PgDown|------+------+------+------+------+--------|
@@ -158,7 +158,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                UP,    P,     C,      L,        M,        F,   RBRC,
                 D,  TML,   RMS,    NMA,        S,   SCOLON,
              DOWN,    J,     G,      W,        V,        Z,   VOLU,
-                   LALT, LCTRL, CTALLEFT, CTALRGHT,   VOLD,
+                          LALT,  LCTRL, CTALLEFT, CTALRGHT,   VOLD,
 
            PGUP, LSHIFT,
            PGDN,
@@ -186,6 +186,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TRNS,
         TRNS,TRNS,TRNS
     ),
+
 
     KEYMAP(  // Layer2, left hand, empty
         TRNS, TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
