@@ -108,7 +108,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+-----+-----+------+-----| Left |           | Down |-------+-------+------+------+------+--------|
      * | LShift |   K  |  Y  | '"  |  -_  |  X  |      |           |      |   J   |   G   |   W  |  V   |   Z  |  VolU  |
      * `--------+------+-----+-----+------+------------'           `--------------+-------+------+------+------+--------'
-     *  | Mute  |   ~  |  =  | LAlt| LCtrl|                                       | LAlt | LCtrl | PrevD| NextD|  VolD |
+     *  | Mute  |   ~  |  =  | LAlt| LCtrl|                                       | RAlt | RCtrl | PrevD| NextD|  VolD |
      *  `---------------------------------'                                       `------------------------------------'
      *                                        ,-------------.       ,-------------.
      *                                        |LShift| Home |       | PgUp |LShift|
@@ -158,7 +158,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                UP,    P,     C,      L,        M,        F,   RBRC,
                 D,  TML,   RMS,    NMA,        S,   SCOLON,
              DOWN,    J,     G,      W,        V,        Z,   VOLU,
-                          LALT,  LCTRL, CTALLEFT, CTALRGHT,   VOLD,
+                          RALT,   RCTL, CTALLEFT, CTALRGHT,   VOLD,
 
            PGUP, LSHIFT,
            PGDN,
