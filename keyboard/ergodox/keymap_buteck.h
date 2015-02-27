@@ -62,6 +62,7 @@ static const uint16_t PROGMEM fn_actions[] = {
     [28] = ACTION_MACRO(POUND),                       // FN28 -  Hold=AltGr, Tap=l, Tap=-
     [29] = ACTION_MACRO(ENHE),                        // FN29 -  Hold=AltGr, Tap=n, Hold,LShift, Tap=Grave
     [30] = ACTION_MODS_TAP_KEY(MOD_LALT, KC_N),       // FN30 -  Tap for N, Hold for Alt
+    [31] = ACTION_MODS_TAP_KEY(MOD_LGUI, KC_ENT),     // FN31 -  Tap for Enter, Hold for GUI
 };
 
 /* Define function actions for readability of keymap below */
@@ -96,6 +97,7 @@ static const uint16_t PROGMEM fn_actions[] = {
 #define KC_POUND     KC_FN28
 #define KC_ENHE      KC_FN29
 #define KC_NMA       KC_FN30
+#define KC_EMG       KC_FN31
 
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Layer 0:
@@ -162,7 +164,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
            PGUP, LSHIFT,
            PGDN,
-        CTRLALTL, ENT, SPC
+        CTRLALTL,   EMG, SPC
     ),
 
     KEYMAP(  // Layer1, left hand, to be used with TML
